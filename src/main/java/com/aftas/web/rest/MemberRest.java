@@ -3,6 +3,7 @@ package com.aftas.web.rest;
 import com.aftas.domain.Member;
 import com.aftas.dto.request.MemberRequestDto;
 import com.aftas.dto.response.MemberResponseDto;
+import com.aftas.exception.ValidationException;
 import com.aftas.mapper.MemberDtoMapper;
 import com.aftas.service.MemberService;
 import com.aftas.utils.Response;
@@ -30,7 +31,7 @@ public class MemberRest {
         return ResponseEntity.ok().body(response);
     }
     @PostMapping
-    public ResponseEntity<Response<MemberResponseDto>> saveMember(@RequestBody @Valid MemberRequestDto memberDto) {
+    public ResponseEntity<Response<MemberResponseDto>> saveMember(@RequestBody @Valid MemberRequestDto memberDto) throws ValidationException {
         Response<MemberResponseDto> response = new Response<>();
         Member member = MemberDtoMapper.toEntity(memberDto);
         Member savedMember = memberService.createMember(member);

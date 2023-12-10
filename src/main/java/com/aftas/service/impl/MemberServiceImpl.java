@@ -1,6 +1,7 @@
 package com.aftas.service.impl;
 
 import com.aftas.domain.Member;
+import com.aftas.exception.ValidationException;
 import com.aftas.repository.MemberRepository;
 import com.aftas.service.MemberService;
 
@@ -8,6 +9,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import com.aftas.utils.ErrorMessage;
 import org.springframework.stereotype.Component;
 
 
@@ -20,10 +23,10 @@ public class MemberServiceImpl implements MemberService {
         this.memberRepository = memberRepository;
     }
     @Override
-    public Member createMember(Member member) {
+    public Member createMember(Member member) throws ValidationException {
         Optional<Member> optionalMember = memberRepository.findByIdentityNumber(member.getIdentityNumber());
         if(optionalMember.isPresent())
-            throw new RuntimeException("Member already exists");
+            throw new ValidationException(new ErrorMessage("Member with identity number already exists"));
         member.setAccessionDate(LocalDate.now());
         return memberRepository.save(member);
     }

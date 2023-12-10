@@ -1,7 +1,7 @@
 package com.aftas.service;
 
 import com.aftas.domain.Member;
-import jakarta.validation.ValidationException;
+import com.aftas.exception.ValidationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ValidationException extends Throwable{
+public class ValidationException extends Exception{
     private ErrorMessage errorMessage;
 }
