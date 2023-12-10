@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import lombok.*;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Builder
@@ -22,9 +22,9 @@ public class Competition {
     @Column(unique = true)
     private String code;
     @Future(message = "Date must be in the future")
-    private Date date;
-    private Time startTime;
-    private Time endtTime;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private Integer numberOfParticipants;
     private String location;
     private Double amount;
