@@ -11,4 +11,6 @@ public interface MemberService {
     Member createMember(Member member) throws ValidationException;
 
     List<Member> getAllMembers();
+
+    Member getMemberIfExists(Long memberId) throws ValidationException;
 }

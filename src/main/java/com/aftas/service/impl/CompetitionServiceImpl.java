@@ -9,6 +9,7 @@ import com.aftas.repository.CompetitionRepository;
 import com.aftas.repository.MemberRepository;
 import com.aftas.repository.RankingRepository;
 import com.aftas.service.CompetitionService;
+import com.aftas.service.MemberService;
 import com.aftas.utils.ErrorMessage;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +24,11 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     private final CompetitionRepository competitionRepository;
     private final RankingRepository rankRepository;
-    private final MemberRepository memberRepository;
-    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankRepository , MemberRepository memberRepository) {
+    private final MemberService memberService;
+    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankRepository , MemberService memberService) {
         this.competitionRepository = competitionRepository;
         this.rankRepository = rankRepository;
-        this.memberRepository = memberRepository;
+        this.memberService = memberService;
     }
 
     @Override
@@ -54,18 +55,12 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     @Override
     public void enrollMember(Long competitionId, Long memberId) throws ValidationException {
-        Optional<Competition> optionalCompetition = competitionRepository.findById(competitionId);
-        if(optionalCompetition.isEmpty())
-            throw new ValidationException(new ErrorMessage("Competition not found"));
-
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if(optionalMember.isEmpty())
-            throw new ValidationException(new ErrorMessage("Member not found"));
+        Competition competition = getCompetitionIfExists(competitionId);
+        Member member = memberService.getMemberIfExists(memberId);
 
         if(rankRepository.getRankingByCompetitionAndMember(competitionId, memberId).isPresent())
             throw new ValidationException(new ErrorMessage("Member already enrolled in this competition"));
 
-        Competition competition = optionalCompetition.get();
         if(competition.getDate().isBefore(LocalDate.now()) || competition.getDate().equals(LocalDate.now()))
             throw new ValidationException(new ErrorMessage("Competition is already over"));
 
@@ -84,9 +79,17 @@ public class CompetitionServiceImpl implements CompetitionService {
                                         .memberId(memberId)
                                         .build()
                         )
-                        .member(optionalMember.get())
+                        .member(member)
                         .competition(competition)
                         .build()
         );
+    }
+
+    @Override
+    public Competition getCompetitionIfExists(Long competitionId) throws ValidationException {
+        Optional<Competition> optionalCompetition = competitionRepository.findById(competitionId);
+        if(optionalCompetition.isEmpty())
+            throw new ValidationException(new ErrorMessage("Competition not found"));
+        return optionalCompetition.get();
     }
 }
