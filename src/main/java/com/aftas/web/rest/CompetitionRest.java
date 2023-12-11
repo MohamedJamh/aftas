@@ -44,4 +44,12 @@ public class CompetitionRest {
         response.setResult(CompetitionDtoMapper.toDto(savedCompetition));
         return ResponseEntity.ok().body(response);
     }
+
+    @GetMapping("/{competitionId}/enroll/{memberId}")
+    public ResponseEntity<Response<CompetitionDto>> enrollMember(@PathVariable("competitionId") String competitionId, @PathVariable("memberId") String memberId) throws ValidationException {
+        Response<CompetitionDto> response = new Response<>();
+        competitionService.enrollMember(Long.valueOf(competitionId), Long.valueOf(memberId));
+        response.setMessage("Member enrolled successfully");
+        return ResponseEntity.ok().body(response);
+    }
 }

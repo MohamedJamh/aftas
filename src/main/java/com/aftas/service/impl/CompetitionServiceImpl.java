@@ -1,21 +1,33 @@
 package com.aftas.service.impl;
 
 import com.aftas.domain.Competition;
+import com.aftas.domain.Member;
+import com.aftas.domain.Ranking;
+import com.aftas.domain.embedded.MemberCompetition;
 import com.aftas.exception.ValidationException;
 import com.aftas.repository.CompetitionRepository;
+import com.aftas.repository.MemberRepository;
+import com.aftas.repository.RankingRepository;
 import com.aftas.service.CompetitionService;
 import com.aftas.utils.ErrorMessage;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
 public class CompetitionServiceImpl implements CompetitionService {
 
     private final CompetitionRepository competitionRepository;
-    public CompetitionServiceImpl(CompetitionRepository competitionRepository) {
+    private final RankingRepository rankRepository;
+    private final MemberRepository memberRepository;
+    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankRepository , MemberRepository memberRepository) {
         this.competitionRepository = competitionRepository;
+        this.rankRepository = rankRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -36,5 +48,43 @@ public class CompetitionServiceImpl implements CompetitionService {
                 String.valueOf(competition.getDate().getYear()).substring(2);
         competition.setCode(competitionCode);
         return competitionRepository.save(competition);
+    }
+
+    @Override
+    public void enrollMember(Long competitionId, Long memberId) throws ValidationException {
+        Optional<Competition> optionalCompetition = competitionRepository.findById(competitionId);
+        if(optionalCompetition.isEmpty())
+            throw new ValidationException(new ErrorMessage("Competition not found"));
+
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if(optionalMember.isEmpty())
+            throw new ValidationException(new ErrorMessage("Member not found"));
+
+        if(rankRepository.getRankingByCompetitionAndMember(competitionId, memberId).isPresent())
+            throw new ValidationException(new ErrorMessage("Member already enrolled in this competition"));
+
+        Competition competition = optionalCompetition.get();
+        if(competition.getDate().isBefore(LocalDate.now()) || competition.getDate().equals(LocalDate.now()))
+            throw new ValidationException(new ErrorMessage("Competition is already over"));
+
+        LocalDateTime competitionDateTime = LocalDateTime.of(competition.getDate(), competition.getStartTime());
+        if(competitionDateTime.minusDays(1).isBefore(LocalDateTime.now()))
+            throw new ValidationException(new ErrorMessage("Competition registration is closed"));
+
+        competition.setNumberOfParticipants(competition.getNumberOfParticipants() + 1);
+        competitionRepository.save(competition);
+
+        rankRepository.save(
+                Ranking.builder()
+                        .id(
+                                MemberCompetition.builder()
+                                        .competitionId(competitionId)
+                                        .memberId(memberId)
+                                        .build()
+                        )
+                        .member(optionalMember.get())
+                        .competition(competition)
+                        .build()
+        );
     }
 }
