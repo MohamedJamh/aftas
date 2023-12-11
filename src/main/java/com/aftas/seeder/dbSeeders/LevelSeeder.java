@@ -25,8 +25,6 @@ public class LevelSeeder {
             Level.builder().code(10).points(7500).description("A hunter of titanic proportions. Pursue the largest and most legendary oceanic trophies.").build()
     };
 
-
-
     private LevelSeeder(LevelRepository levelRepository) {
         this.levelRepository = levelRepository;
     }
