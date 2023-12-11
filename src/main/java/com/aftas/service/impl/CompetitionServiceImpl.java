@@ -41,6 +41,8 @@ public class CompetitionServiceImpl implements CompetitionService {
             throw new ValidationException(new ErrorMessage("There is already a competition on this day"));
         if( competition.getStartTime().isAfter(competition.getEndTime()) || competition.getStartTime().equals(competition.getEndTime()))
             throw new ValidationException(new ErrorMessage("Start time cannot be equal or after end time"));
+        if(competition.getDate().minusDays(2).isBefore(LocalDate.now()) || competition.getDate().minusDays(2).equals(LocalDate.now()))
+            throw new ValidationException(new ErrorMessage("Competition date cannot be less than 2 days from now"));
         competition.setNumberOfParticipants(0);
         String competitionCode = competition.getLocation().substring(0, 3).toUpperCase() + "-" +
                 competition.getDate().getDayOfMonth() + "-" +
