@@ -27,7 +27,7 @@ public class LevelRest {
         Response<List<LevelDto>> response = new Response<>();
         List<LevelDto> levels = new ArrayList<>();
         levelService.getAllLevels().stream().map(LevelDtoMapper::toDto).forEach(levels::add);
-        response.setMessage("Success");
+        response.setMessage("Levels retrieved successfully");
         response.setResult(levels);
         return ResponseEntity.ok().body(response);
     }
@@ -36,6 +36,7 @@ public class LevelRest {
     public ResponseEntity<Response<LevelDto>> saveLevel(@RequestBody @Valid LevelDto level) throws ValidationException {
         Response<LevelDto> response = new Response<>();
         Level savedLevel = levelService.createLevel(LevelDtoMapper.toEntity(level));
+        response.setMessage("Level created successfully");
         response.setResult(LevelDtoMapper.toDto(savedLevel));
         return ResponseEntity.ok().body(response);
     }

@@ -27,6 +27,7 @@ public class FishRest {
         Response<List<FishDto>> response = new Response<>();
         List<FishDto> fishes = new ArrayList<>();
         fishService.getAllFishes().stream().map(FishDtoMapper::toDto).forEach(fishes::add);
+        response.setMessage("Fishes retrieved successfully");
         response.setResult(fishes);
         return ResponseEntity.ok().body(response);
     }
@@ -35,6 +36,7 @@ public class FishRest {
     public ResponseEntity<Response<FishDto>> saveFish(@RequestBody @Valid FishDto fish) throws ValidationException {
         Response<FishDto> response = new Response<>();
         Fish savedFish = fishService.createFish(FishDtoMapper.toEntity(fish));
+        response.setMessage("Fish created successfully");
         response.setResult(FishDtoMapper.toDto(savedFish));
         return ResponseEntity.ok().body(response);
     }

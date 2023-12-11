@@ -27,6 +27,7 @@ public class MemberRest {
         Response<List<MemberResponseDto>> response = new Response<>();
         List<MemberResponseDto> members = new ArrayList<>();
         memberService.getAllMembers().stream().map(MemberDtoMapper::toDto).forEach(members::add);
+        response.setMessage("Members retrieved successfully");
         response.setResult(members);
         return ResponseEntity.ok().body(response);
     }
@@ -35,6 +36,7 @@ public class MemberRest {
         Response<MemberResponseDto> response = new Response<>();
         Member member = MemberDtoMapper.toEntity(memberDto);
         Member savedMember = memberService.createMember(member);
+        response.setMessage("Member created successfully");
         response.setResult(MemberDtoMapper.toDto(savedMember));
         return ResponseEntity.ok().body(response);
     }
