@@ -34,7 +34,7 @@ public class HuntingServiceImpl implements HuntingService {
     public Optional<Hunting> createHunting(HuntingRequestDto huntingDto) throws ValidationException {
         Member member = memberService.getMemberIfExists(huntingDto.getMemberId());
         Competition competition = competitionService.getCompetitionIfExists(huntingDto.getCompetitionId());
-        Ranking ranking = rankingService.getRankingIfExists(competition.getId(),member.getId());
+        Ranking ranking = rankingService.getMemberCompetitionRankingIfExist(competition.getId(),member.getId());
         Fish fish = fishService.getFishIfExists(huntingDto.getFish().getName());
         if(fish.getAverageWeight() > huntingDto.getFish().getWeight())
             return Optional.empty();

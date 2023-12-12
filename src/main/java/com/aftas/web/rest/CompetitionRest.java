@@ -52,4 +52,12 @@ public class CompetitionRest {
         response.setMessage("Member enrolled successfully");
         return ResponseEntity.ok().body(response);
     }
+
+    /*@GetMapping("/{competitionId}/rankings")
+    public ResponseEntity<Response<CompetitionDto>> rankMembers(@PathVariable("competitionId") String competitionId) throws ValidationException {
+        Response<CompetitionDto> response = new Response<>();
+        competitionService.rankMembers(Long.valueOf(competitionId));
+        response.setMessage("Members ranked successfully");
+        return ResponseEntity.ok().body(response);
+    }*/
 }
