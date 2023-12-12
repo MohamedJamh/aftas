@@ -6,7 +6,6 @@ import com.aftas.domain.Ranking;
 import com.aftas.domain.embedded.MemberCompetition;
 import com.aftas.exception.ValidationException;
 import com.aftas.repository.CompetitionRepository;
-import com.aftas.repository.MemberRepository;
 import com.aftas.repository.RankingRepository;
 import com.aftas.service.CompetitionService;
 import com.aftas.service.MemberService;
@@ -17,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class CompetitionServiceImpl implements CompetitionService {
@@ -81,6 +79,8 @@ public class CompetitionServiceImpl implements CompetitionService {
                         )
                         .member(member)
                         .competition(competition)
+                        .score(0)
+                        .rank(0)
                         .build()
         );
     }

@@ -6,8 +6,6 @@ import com.aftas.exception.ValidationException;
 import com.aftas.repository.HuntingRepository;
 import com.aftas.repository.RankingRepository;
 import com.aftas.service.*;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +36,7 @@ public class HuntingServiceImpl implements HuntingService {
         Competition competition = competitionService.getCompetitionIfExists(huntingDto.getCompetitionId());
         Ranking ranking = rankingService.getRankingIfExists(competition.getId(),member.getId());
         Fish fish = fishService.getFishIfExists(huntingDto.getFish().getName());
-        if(fish.getAverageWeight() < huntingDto.getFish().getWeight())
+        if(fish.getAverageWeight() > huntingDto.getFish().getWeight())
             return Optional.empty();
         Optional<Hunting> optionalHunting = huntingRepository.getHuntingsByCompetitionAndMemberAndFish(competition.getId(), member.getId(), fish.getId());
         Hunting hunting = new Hunting();
