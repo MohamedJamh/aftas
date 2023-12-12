@@ -35,4 +35,12 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }
+
+    @Override
+    public Member getMemberIfExists(Long memberId) throws ValidationException {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if(optionalMember.isEmpty())
+            throw new ValidationException(new ErrorMessage("Member not found"));
+        return optionalMember.get();
+    }
 }

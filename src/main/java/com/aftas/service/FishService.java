@@ -9,6 +9,7 @@ import java.util.List;
 @Service
 public interface FishService {
     Fish createFish(Fish fish) throws ValidationException;
-
     List<Fish> getAllFishes();
+
+    Fish getFishIfExists(String fishName) throws ValidationException;
 }

@@ -39,4 +39,12 @@ public class FishServiceImpl implements FishService {
     public List<Fish> getAllFishes() {
         return fishRepository.findAll();
     }
+
+    @Override
+    public Fish getFishIfExists(String fishName) throws ValidationException {
+        Optional<Fish> fishOptional = fishRepository.findByName(fishName);
+        if(fishOptional.isEmpty())
+            throw new ValidationException(new ErrorMessage("Fish not found"));
+        return fishOptional.get();
+    }
 }

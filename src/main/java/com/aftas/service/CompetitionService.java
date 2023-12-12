@@ -13,4 +13,6 @@ public interface CompetitionService {
     Competition createCompetition(Competition competition) throws ValidationException;
 
     void enrollMember(Long competitionId, Long memberId) throws ValidationException;
+
+    Competition getCompetitionIfExists(Long competitionId) throws ValidationException;
 }

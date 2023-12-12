@@ -74,10 +74,10 @@ public class CompetitionServiceImpl implements CompetitionService {
         rankRepository.save(
                 Ranking.builder()
                         .id(
-                                MemberCompetition.builder()
-                                        .competitionId(competitionId)
-                                        .memberId(memberId)
-                                        .build()
+                            MemberCompetition.builder()
+                                    .competitionId(competitionId)
+                                    .memberId(memberId)
+                                    .build()
                         )
                         .member(member)
                         .competition(competition)
