@@ -5,6 +5,7 @@ import com.aftas.exception.ValidationException;
 import com.aftas.repository.MemberRepository;
 import com.aftas.service.MemberService;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import com.aftas.utils.ErrorMessage;
@@ -44,6 +45,18 @@ public class MemberServiceImpl implements MemberService {
         if(optionalMember.isEmpty())
             throw new ValidationException(new ErrorMessage("Member not found"));
         return optionalMember.get();
+    }
+
+    @Override
+    public List<Member> findByCriteria(String searchValue) {
+        Optional<List<Member>> optionalMembers = Optional.empty();
+        try {
+            Integer memberNum = Integer.valueOf(searchValue);
+            optionalMembers = memberRepository.findByNum(memberNum);
+        } catch (NumberFormatException e) {
+            optionalMembers = memberRepository.findByFirstNameOrLastName(searchValue, searchValue);
+        }
+        return optionalMembers.orElseGet(List::of);
     }
 
 }

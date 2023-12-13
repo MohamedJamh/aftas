@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -19,4 +18,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT MAX(m.id) FROM Member m")
     Integer getMaxId();
+
+    Optional<List<Member>> findByNum(Integer memberNum);
+
+    Optional<List<Member>> findByFirstNameOrLastName(String firstName, String lastName);
 }

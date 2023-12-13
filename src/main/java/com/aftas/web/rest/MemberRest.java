@@ -44,6 +44,23 @@ public class MemberRest {
         );
         return ResponseEntity.ok().body(response);
     }
+    @GetMapping("/search")
+    public ResponseEntity<Response<List<MemberResponseDto>>> findByCriteria(
+            @RequestParam(value="value") String searchValue
+    ) {
+        Response<List<MemberResponseDto>> response = new Response<>();
+        List<MemberResponseDto> memberResponseDtos = new ArrayList<>();
+        List<Member> members = memberService.findByCriteria(searchValue);
+        if(members.isEmpty()){
+            response.setMessage("No members found");
+            response.setResult(null);
+        }else{
+            members.stream().map(MemberDtoMapper::toDto).forEach(memberResponseDtos::add);
+            response.setMessage("Members retrieved successfully");
+            response.setResult(memberResponseDtos);
+        }
+        return ResponseEntity.ok().body(response);
+    }
     @PostMapping
     public ResponseEntity<Response<MemberResponseDto>> saveMember(@RequestBody @Valid MemberRequestDto memberDto) throws ValidationException {
         Response<MemberResponseDto> response = new Response<>();
