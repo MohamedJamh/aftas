@@ -6,9 +6,11 @@ import com.aftas.exception.ValidationException;
 import com.aftas.repository.HuntingRepository;
 import com.aftas.repository.RankingRepository;
 import com.aftas.service.*;
+import com.aftas.utils.ErrorMessage;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 @Component
 public class HuntingServiceImpl implements HuntingService {
@@ -34,6 +36,9 @@ public class HuntingServiceImpl implements HuntingService {
     public Optional<Hunting> createHunting(HuntingRequestDto huntingDto) throws ValidationException {
         Member member = memberService.getMemberIfExists(huntingDto.getMemberId());
         Competition competition = competitionService.getCompetitionIfExists(huntingDto.getCompetitionId());
+        LocalDateTime competitionStartDateTime = LocalDateTime.of(competition.getDate(), competition.getStartTime());
+        if(LocalDateTime.now().isBefore(competitionStartDateTime))
+            throw new ValidationException(new ErrorMessage("Competition has not started yet"));
         Ranking ranking = rankingService.getMemberCompetitionRankingIfExist(competition.getId(),member.getId());
         Fish fish = fishService.getFishIfExists(huntingDto.getFish().getName());
         if(fish.getAverageWeight() > huntingDto.getFish().getWeight())
