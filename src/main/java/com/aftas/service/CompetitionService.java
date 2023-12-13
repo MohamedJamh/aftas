@@ -1,6 +1,7 @@
 package com.aftas.service;
 
 import com.aftas.domain.Competition;
+import com.aftas.domain.Member;
 import com.aftas.exception.ValidationException;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,6 @@ public interface CompetitionService {
     void enrollMember(Long competitionId, Long memberId) throws ValidationException;
 
     Competition getCompetitionIfExists(Long competitionId) throws ValidationException;
+
+    List<Member> getMembersByCompetitions(Long competitionId) throws ValidationException;
 }

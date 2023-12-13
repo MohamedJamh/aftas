@@ -6,6 +6,7 @@ import com.aftas.domain.Ranking;
 import com.aftas.domain.embedded.MemberCompetition;
 import com.aftas.exception.ValidationException;
 import com.aftas.repository.CompetitionRepository;
+import com.aftas.repository.MemberRepository;
 import com.aftas.repository.RankingRepository;
 import com.aftas.service.CompetitionService;
 import com.aftas.service.MemberService;
@@ -23,10 +24,13 @@ public class CompetitionServiceImpl implements CompetitionService {
     private final CompetitionRepository competitionRepository;
     private final RankingRepository rankRepository;
     private final MemberService memberService;
-    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankRepository , MemberService memberService) {
+
+    private final MemberRepository memberRepository;
+    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankRepository , MemberService memberService, MemberRepository memberRepository) {
         this.competitionRepository = competitionRepository;
         this.rankRepository = rankRepository;
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -91,5 +95,12 @@ public class CompetitionServiceImpl implements CompetitionService {
         if(optionalCompetition.isEmpty())
             throw new ValidationException(new ErrorMessage("Competition not found"));
         return optionalCompetition.get();
+    }
+
+
+    @Override
+    public List<Member> getMembersByCompetitions(Long competitionId) throws ValidationException {
+        getCompetitionIfExists(competitionId);
+        return memberRepository.findAllByCompetition(competitionId);
     }
 }

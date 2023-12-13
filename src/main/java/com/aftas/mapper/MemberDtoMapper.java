@@ -15,7 +15,6 @@ public class MemberDtoMapper {
         return Member.builder()
             .firstName(memberRequestDto.getFirstName())
             .lastName(memberRequestDto.getLastName())
-            .num(memberRequestDto.getNum())
             .nationality(memberRequestDto.getNationality())
             .identityNumber(memberRequestDto.getIdentityNumber())
             .identityType(memberRequestDto.getIdentityType())

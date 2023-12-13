@@ -2,9 +2,12 @@ package com.aftas.web.rest;
 
 import com.aftas.domain.Competition;
 import com.aftas.dto.CompetitionDto;
+import com.aftas.dto.response.MemberResponseDto;
 import com.aftas.exception.ValidationException;
 import com.aftas.mapper.CompetitionDtoMapper;
+import com.aftas.mapper.MemberDtoMapper;
 import com.aftas.service.CompetitionService;
+import com.aftas.service.MemberService;
 import com.aftas.utils.Response;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -53,11 +56,17 @@ public class CompetitionRest {
         return ResponseEntity.ok().body(response);
     }
 
-    /*@GetMapping("/{competitionId}/rankings")
-    public ResponseEntity<Response<CompetitionDto>> rankMembers(@PathVariable("competitionId") String competitionId) throws ValidationException {
-        Response<CompetitionDto> response = new Response<>();
-        competitionService.rankMembers(Long.valueOf(competitionId));
-        response.setMessage("Members ranked successfully");
+
+    @GetMapping("/{competitionId}/members")
+    public ResponseEntity<Response<List<MemberResponseDto>>> getMemberByCompetition(@PathVariable Long competitionId) throws ValidationException{
+        Response<List<MemberResponseDto>> response = new Response<>();
+        List<MemberResponseDto> members = new ArrayList<>();
+        competitionService.getMembersByCompetitions(competitionId)
+                .stream()
+                .map(MemberDtoMapper::toDto)
+                .forEach(members::add);
+        response.setMessage("Members retrieved successfully");
+        response.setResult(members);
         return ResponseEntity.ok().body(response);
-    }*/
+    }
 }

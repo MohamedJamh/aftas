@@ -15,8 +15,7 @@ import java.time.LocalDate;
 @Setter
 public class MemberRequestDto {
     private Long id;
-    @NotNull(message = "Num is required")
-    private Integer num;
+
     @NotNull(message = "First name is required")
     @NotBlank(message = "First name is required")
     private String firstName;
