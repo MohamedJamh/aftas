@@ -3,15 +3,14 @@ package com.aftas.service.impl;
 import com.aftas.domain.Member;
 import com.aftas.exception.ValidationException;
 import com.aftas.repository.MemberRepository;
-import com.aftas.service.CompetitionService;
 import com.aftas.service.MemberService;
-
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import com.aftas.utils.ErrorMessage;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 
@@ -34,8 +33,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> getAllMembers() {
-        return memberRepository.findAll();
+    public Page<Member> getAllMembers(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        return memberRepository.findAll(paging);
     }
 
     @Override

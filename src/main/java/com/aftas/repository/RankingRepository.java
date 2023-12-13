@@ -5,7 +5,6 @@ import com.aftas.dto.response.RankingResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import com.aftas.dto.response.RankingResponseDto;
 
 import java.util.List;
 import java.util.Optional;
