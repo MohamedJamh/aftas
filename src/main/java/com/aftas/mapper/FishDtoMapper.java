@@ -14,6 +14,7 @@ public class FishDtoMapper {
                 .name(fish.getName())
                 .averageWeight(fish.getAverageWeight())
                 .level(fish.getLevel().getCode())
+                .image(fish.getImage())
                 .build();
     }
     public static Fish toEntity(FishDto fish) {
@@ -25,6 +26,7 @@ public class FishDtoMapper {
                                 .code(fish.getLevel())
                                 .build()
                 )
+                .image(fish.getImage())
                 .build();
     }
 }

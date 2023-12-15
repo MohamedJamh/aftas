@@ -28,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
         if(optionalMember.isPresent())
             throw new ValidationException(new ErrorMessage("Member with identity number already exists"));
         Integer maxId = memberRepository.getMaxId();
+        if(maxId == null) maxId = 0;
         member.setAccessionDate(LocalDate.now());
         member.setNum( maxId + 1 + LocalDate.now().getYear());
         return memberRepository.save(member);

@@ -38,7 +38,7 @@ public class MemberRest {
                 MemberPageableDto.builder()
                         .members(memberResponseDtos)
                         .totalPages(memberPages.getTotalPages())
-                        .currentPage(memberPages.getNumber())
+                        .currentPage(memberPages.getNumber() + 1)
                         .totalElements(memberPages.getTotalElements())
                         .build()
         );

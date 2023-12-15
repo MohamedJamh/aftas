@@ -17,6 +17,8 @@ public class Fish {
     @Column(unique = true)
     private String name;
     private Double averageWeight;
+    @Column(columnDefinition = "TEXT")
+    private String image;
 
     @ManyToOne
     private Level level;
