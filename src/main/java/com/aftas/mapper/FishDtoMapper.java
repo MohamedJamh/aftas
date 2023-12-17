@@ -13,7 +13,7 @@ public class FishDtoMapper {
                 .id(fish.getId())
                 .name(fish.getName())
                 .averageWeight(fish.getAverageWeight())
-                .level(fish.getLevel().getCode())
+                .levelCode(fish.getLevel().getCode())
                 .image(fish.getImage())
                 .build();
     }
@@ -23,7 +23,7 @@ public class FishDtoMapper {
                 .averageWeight(fish.getAverageWeight())
                 .level(
                         Level.builder()
-                                .code(fish.getLevel())
+                                .code(fish.getLevelCode())
                                 .build()
                 )
                 .image(fish.getImage())

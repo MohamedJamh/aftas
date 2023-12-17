@@ -69,4 +69,17 @@ public class CompetitionRest {
         response.setResult(members);
         return ResponseEntity.ok().body(response);
     }
+
+    @GetMapping("/upcoming")
+    public ResponseEntity<Response<List<CompetitionDto>>> upcomingCompetition() throws ValidationException{
+        Response<List<CompetitionDto>> response = new Response<>();
+        List<Competition> competitions = competitionService.upcomingCompetition();
+        if(competitions.isEmpty())
+            response.setMessage("No upcoming competition");
+        else response.setMessage("Upcoming competition retrieved successfully");
+        response.setResult(
+                competitions.stream().map(CompetitionDtoMapper::toDto).toList()
+        );
+        return ResponseEntity.ok().body(response);
+    }
 }

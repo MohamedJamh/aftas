@@ -4,6 +4,9 @@ import com.aftas.domain.Member;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -19,7 +22,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT MAX(m.id) FROM Member m")
     Integer getMaxId();
 
-    Optional<List<Member>> findByNum(Integer memberNum);
+    Page<Member> findByNum(Integer memberNum, Pageable pageable);
 
-    Optional<List<Member>> findByFirstNameOrLastName(String firstName, String lastName);
+    Page<Member> findByFirstNameOrLastName(String firstName, String lastName, Pageable pageable);
 }

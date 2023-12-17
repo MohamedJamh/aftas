@@ -23,6 +23,7 @@ public class AppExceptionHandler {
             ErrorMessage errorMessageObj = ErrorMessage.builder().message(errorMessage).build();
             errorMessages.add(errorMessageObj);
         });
+        response.setMessage("Validation error");
         response.setErrors(errorMessages);
         return new ResponseEntity<>(
                 response,
@@ -35,6 +36,7 @@ public class AppExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Response<ErrorMessage>> inputValidationException(ValidationException ex) {
         Response<ErrorMessage> response = new Response<>();
+        response.setMessage("Validation error");
         response.setErrors(List.of(ex.getErrorMessage()));
         return new ResponseEntity<>(
                 response,

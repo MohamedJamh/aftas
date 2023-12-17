@@ -103,4 +103,9 @@ public class CompetitionServiceImpl implements CompetitionService {
         getCompetitionIfExists(competitionId);
         return memberRepository.findAllByCompetition(competitionId);
     }
+
+    @Override
+    public List<Competition> upcomingCompetition() {
+        return competitionRepository.upcomingCompetition();
+    }
 }

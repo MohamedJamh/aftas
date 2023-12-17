@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.ListIndexBase;
 
 @Builder
 @NoArgsConstructor
@@ -24,7 +23,7 @@ public class FishDto {
     private Double averageWeight;
     @NotNull(message = "Fish level cannot be null")
     @Min(value = 1, message = "Fish level cannot be negative or zero")
-    private Integer level;
+    private Integer levelCode;
     @NotBlank(message = "Fish image cannot be blank")
     private String image;
 }

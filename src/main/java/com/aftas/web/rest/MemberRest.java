@@ -45,20 +45,26 @@ public class MemberRest {
         return ResponseEntity.ok().body(response);
     }
     @GetMapping("/search")
-    public ResponseEntity<Response<List<MemberResponseDto>>> findByCriteria(
-            @RequestParam(value="value") String searchValue
+    public ResponseEntity<Response<MemberPageableDto>> findByCriteria(
+            @RequestParam(value="value") String searchValue,
+            @RequestParam(value="pageNo", required = false, defaultValue = "0") Integer pageNo,
+            @RequestParam(value="pageSize", required = false, defaultValue = "5") Integer pageSize
     ) {
-        Response<List<MemberResponseDto>> response = new Response<>();
+        Response<MemberPageableDto> response = new Response<>();
+        Page<Member> memberPages = memberService.findByCriteria(searchValue,pageNo,pageSize);
         List<MemberResponseDto> memberResponseDtos = new ArrayList<>();
-        List<Member> members = memberService.findByCriteria(searchValue);
-        if(members.isEmpty()){
-            response.setMessage("No members found");
-            response.setResult(null);
-        }else{
-            members.stream().map(MemberDtoMapper::toDto).forEach(memberResponseDtos::add);
-            response.setMessage("Members retrieved successfully");
-            response.setResult(memberResponseDtos);
-        }
+        if(memberPages.isEmpty())
+            response.setMessage("No member found");
+        else response.setMessage("Members retrieved successfully");
+        memberPages.stream().map(MemberDtoMapper::toDto).forEach(memberResponseDtos::add);
+        response.setResult(
+                MemberPageableDto.builder()
+                        .members(memberResponseDtos)
+                        .totalPages(memberPages.getTotalPages())
+                        .currentPage(memberPages.getNumber() + 1)
+                        .totalElements(memberPages.getTotalElements())
+                        .build()
+        );
         return ResponseEntity.ok().body(response);
     }
     @PostMapping

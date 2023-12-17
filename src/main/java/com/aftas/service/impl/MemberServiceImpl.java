@@ -49,15 +49,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> findByCriteria(String searchValue) {
-        Optional<List<Member>> optionalMembers = Optional.empty();
+    public Page<Member> findByCriteria(String searchValue,Integer pageNo, Integer pageSize) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize);
         try {
             Integer memberNum = Integer.valueOf(searchValue);
-            optionalMembers = memberRepository.findByNum(memberNum);
+            return memberRepository.findByNum(memberNum,paging);
         } catch (NumberFormatException e) {
-            optionalMembers = memberRepository.findByFirstNameOrLastName(searchValue, searchValue);
+            return memberRepository.findByFirstNameOrLastName(searchValue, searchValue, paging);
         }
-        return optionalMembers.orElseGet(List::of);
     }
 
 }

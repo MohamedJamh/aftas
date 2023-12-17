@@ -18,4 +18,6 @@ public interface CompetitionService {
     Competition getCompetitionIfExists(Long competitionId) throws ValidationException;
 
     List<Member> getMembersByCompetitions(Long competitionId) throws ValidationException;
+
+    List<Competition> upcomingCompetition();
 }
