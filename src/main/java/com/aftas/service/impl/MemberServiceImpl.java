@@ -41,10 +41,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member getMemberIfExists(Long memberId) throws ValidationException {
+    public Member getMemberIfExistsById(Long memberId) throws ValidationException {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if(optionalMember.isEmpty())
-            throw new ValidationException(new ErrorMessage("Member not found"));
+            throwNotFoundException();
+        return optionalMember.get();
+    }
+
+    @Override
+    public Member getMemberIfExistsByNumber(Integer memberCode) throws ValidationException {
+        Optional<Member> optionalMember = memberRepository.findByNum(memberCode);
+        if(optionalMember.isEmpty())
+            throwNotFoundException();
         return optionalMember.get();
     }
 
@@ -58,6 +66,10 @@ public class MemberServiceImpl implements MemberService {
         } catch (NumberFormatException e) {
             return memberRepository.findByFirstNameOrLastName(searchValue, searchValue, paging);
         }
+    }
+
+    private void throwNotFoundException() throws ValidationException {
+        throw new ValidationException(new ErrorMessage("Member not found"));
     }
 
 }

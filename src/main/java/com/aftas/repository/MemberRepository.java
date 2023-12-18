@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByIdentityNumber(String identityNumber);
+    Optional<Member> findByNum(Integer num);
 
     @Query("SELECT m FROM Member m where m.id IN (SELECT r.member.id FROM Ranking r where r.competition.id = :competitionId)")
     List<Member> findAllByCompetition(Long competitionId);

@@ -4,6 +4,7 @@ import com.aftas.domain.Competition;
 import com.aftas.domain.Member;
 import com.aftas.domain.Ranking;
 import com.aftas.domain.embedded.MemberCompetition;
+import com.aftas.dto.response.CompetitionScoreResponseDto;
 import com.aftas.exception.ValidationException;
 import com.aftas.repository.CompetitionRepository;
 import com.aftas.repository.MemberRepository;
@@ -56,17 +57,17 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
-    public void enrollMember(Long competitionId, Long memberId) throws ValidationException {
+    public void enrollMember(Long competitionId, Integer memberCode) throws ValidationException {
         Competition competition = getCompetitionIfExists(competitionId);
-        Member member = memberService.getMemberIfExists(memberId);
+        Member member = memberService.getMemberIfExistsByNumber(memberCode);
 
-        if(rankRepository.getRankingByCompetitionAndMember(competitionId, memberId).isPresent())
+        if(rankRepository.getRankingByCompetitionAndMember(competitionId, member.getId()).isPresent())
             throw new ValidationException(new ErrorMessage("Member already enrolled in this competition"));
 
         if(competition.getDate().isBefore(LocalDate.now()) || competition.getDate().equals(LocalDate.now()))
             throw new ValidationException(new ErrorMessage("Competition is already over"));
 
-        LocalDateTime competitionDateTime = LocalDateTime.of(competition.getDate(), competition.getStartTime());
+        LocalDateTime competitionDateTime = getCompetitionDateTime(competition);
         if(competitionDateTime.minusDays(1).isBefore(LocalDateTime.now()))
             throw new ValidationException(new ErrorMessage("Competition registration is closed"));
 
@@ -78,7 +79,7 @@ public class CompetitionServiceImpl implements CompetitionService {
                         .id(
                             MemberCompetition.builder()
                                     .competitionId(competitionId)
-                                    .memberId(memberId)
+                                    .memberId(member.getId())
                                     .build()
                         )
                         .member(member)
@@ -87,6 +88,10 @@ public class CompetitionServiceImpl implements CompetitionService {
                         .rank(0)
                         .build()
         );
+    }
+
+    private static LocalDateTime getCompetitionDateTime(Competition competition) {
+        return LocalDateTime.of(competition.getDate(), competition.getStartTime());
     }
 
     @Override
@@ -107,5 +112,13 @@ public class CompetitionServiceImpl implements CompetitionService {
     @Override
     public List<Competition> upcomingCompetition() {
         return competitionRepository.upcomingCompetition();
+    }
+
+    @Override
+    public List<CompetitionScoreResponseDto> realTimeScore(Long competitionId) throws ValidationException {
+        Competition competition = getCompetitionIfExists(competitionId);
+        if(LocalDateTime.now().isBefore(getCompetitionDateTime(competition)))
+            throw new ValidationException(new ErrorMessage("Competition has not started yet"));
+        return rankRepository.getRealTimeScore(competitionId);
     }
 }

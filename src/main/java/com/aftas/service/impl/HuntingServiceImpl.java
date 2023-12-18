@@ -35,7 +35,7 @@ public class HuntingServiceImpl implements HuntingService {
     @Transactional
     public Optional<Hunting> createHunting(HuntingRequestDto huntingDto) throws ValidationException {
         //todo : follow best practices and keep service clean without dots , create mapper to entity , send hunt entity and weight seperately
-        Member member = memberService.getMemberIfExists(huntingDto.getMemberId());
+        Member member = memberService.getMemberIfExistsById(huntingDto.getMemberId());
         Competition competition = competitionService.getCompetitionIfExists(huntingDto.getCompetitionId());
         LocalDateTime competitionStartDateTime = LocalDateTime.of(competition.getDate(), competition.getStartTime());
         if(LocalDateTime.now().isBefore(competitionStartDateTime))

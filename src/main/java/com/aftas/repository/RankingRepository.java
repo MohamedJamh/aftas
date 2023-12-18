@@ -1,6 +1,7 @@
 package com.aftas.repository;
 
 import com.aftas.domain.Ranking;
+import com.aftas.dto.response.CompetitionScoreResponseDto;
 import com.aftas.dto.response.RankingResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +24,7 @@ public interface RankingRepository extends JpaRepository<Ranking, Long> {
     @Query("SELECT new com.aftas.dto.response.RankingResponseDto(r.rank, r.score, r.member.firstName,r.member.lastName,r.member.nationality,r.member.num) " +
             "FROM Ranking r WHERE r.competition.id = :competitionId")
     List<RankingResponseDto> getRankingWithMemberByCompetition(Long competitionId);
+
+    @Query("Select new com.aftas.dto.response.CompetitionScoreResponseDto(r.member.num,r.member.firstName,r.member.lastName,r.score) from Ranking r where r.competition.id = :competitionId order by r.score desc")
+    List<CompetitionScoreResponseDto> getRealTimeScore(Long competitionId);
 }

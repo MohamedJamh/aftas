@@ -2,6 +2,7 @@ package com.aftas.web.rest;
 
 import com.aftas.domain.Competition;
 import com.aftas.dto.CompetitionDto;
+import com.aftas.dto.response.CompetitionScoreResponseDto;
 import com.aftas.dto.response.MemberResponseDto;
 import com.aftas.exception.ValidationException;
 import com.aftas.mapper.CompetitionDtoMapper;
@@ -48,10 +49,10 @@ public class CompetitionRest {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/{competitionId}/enroll/{memberId}")
-    public ResponseEntity<Response<CompetitionDto>> enrollMember(@PathVariable("competitionId") String competitionId, @PathVariable("memberId") String memberId) throws ValidationException {
+    @GetMapping("/{competitionId}/enroll/{memberNumber}")
+    public ResponseEntity<Response<CompetitionDto>> enrollMember(@PathVariable("competitionId") String competitionId, @PathVariable("memberNumber") Integer memberNumber) throws ValidationException {
         Response<CompetitionDto> response = new Response<>();
-        competitionService.enrollMember(Long.valueOf(competitionId), Long.valueOf(memberId));
+        competitionService.enrollMember(Long.valueOf(competitionId), memberNumber);
         response.setMessage("Member enrolled successfully");
         return ResponseEntity.ok().body(response);
     }
@@ -80,6 +81,15 @@ public class CompetitionRest {
         response.setResult(
                 competitions.stream().map(CompetitionDtoMapper::toDto).toList()
         );
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/{competitionId}/real-time-score")
+    public ResponseEntity<Response<List<CompetitionScoreResponseDto>>> realTimeScore(@PathVariable Long competitionId) throws ValidationException{
+        Response<List<CompetitionScoreResponseDto>> response = new Response<>();
+        List<CompetitionScoreResponseDto> competitionScores = competitionService.realTimeScore(competitionId);
+        response.setMessage("Real time score retrieved successfully");
+        response.setResult(competitionScores);
         return ResponseEntity.ok().body(response);
     }
 }
