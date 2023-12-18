@@ -13,5 +13,5 @@ public interface RankingService {
 
     Ranking getMemberCompetitionRankingIfExist(Long competitionId, Long memberId) throws ValidationException;
 
-    List<RankingResponseDto> generateRankings(Long competitionId) throws ValidationException;
+    void generateRankings(Long competitionId);
 }

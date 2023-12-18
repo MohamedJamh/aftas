@@ -10,6 +10,7 @@ import com.aftas.service.RankingService;
 import com.aftas.utils.ErrorMessage;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 @Component
@@ -24,9 +25,13 @@ public class RankingServiceImpl implements RankingService {
     }
     @Override
     public List<RankingResponseDto> getRankingsByCompetition(Long competitionId) throws ValidationException {
-        competitionService.getCompetitionIfExists(competitionId);
-        if(rankingRepository.countRankedMemberByCompetition(competitionId) <= 0)
-            throw new ValidationException(new ErrorMessage("Competition rankings has not been generated"));
+        Competition competition = competitionService.getCompetitionIfExists(competitionId);
+        if(rankingRepository.countRankedMemberByCompetition(competitionId) <= 0){
+            LocalDateTime competitionEndDateTime = LocalDateTime.of(competition.getDate(), competition.getEndTime());
+            if(competitionEndDateTime.isAfter(LocalDateTime.now()))
+                throw new ValidationException(new ErrorMessage("Competition has not ended yet"));
+            generateRankings(competitionId);
+        }
         return rankingRepository.getRankingWithMemberByCompetition(competitionId);
     }
 
@@ -39,15 +44,11 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public List<RankingResponseDto> generateRankings(Long competitionId) throws ValidationException {
-        competitionService.getCompetitionIfExists(competitionId);
-        if(rankingRepository.countRankedMemberByCompetition(competitionId) > 1)
-            throw new ValidationException(new ErrorMessage("Competition already ranked"));
+    public void generateRankings(Long competitionId) {
         List<Ranking> rankings = rankingRepository.getRankingsByCompetitionOrderByScoreDesc(competitionId);
         rankings.forEach(ranking -> {
             ranking.setRank(rankings.indexOf(ranking) + 1);
             rankingRepository.save(ranking);
         });
-        return rankingRepository.getRankingWithMemberByCompetition(competitionId);
     }
 }

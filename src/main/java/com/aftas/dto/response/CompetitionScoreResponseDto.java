@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 public class CompetitionScoreResponseDto {
-    private Integer number;
+    private Integer num;
     private String firstName;
     private String lastName;
     private Integer score;

@@ -28,12 +28,4 @@ public class RankingRest {
         response.setResult(rankingService.getRankingsByCompetition(competitionId));
         return ResponseEntity.ok().body(response);
     }
-
-    @GetMapping("/{competitionId}/generate")
-    public ResponseEntity<Response<List<RankingResponseDto>>> generateRankings(@PathVariable Long competitionId) throws ValidationException {
-        Response<List<RankingResponseDto>> response = new Response<>();
-        response.setMessage("Rankings generated successfully");
-        response.setResult(rankingService.generateRankings(competitionId));
-        return ResponseEntity.ok().body(response);
-    }
 }
