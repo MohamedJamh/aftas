@@ -1,0 +1,287 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1704793798437-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_competitions
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: code
+                  type: VARCHAR(255)
+              - column:
+                  name: date
+                  type: DATE
+              - column:
+                  name: start_time
+                  type: TIME
+              - column:
+                  name: end_time
+                  type: TIME
+              - column:
+                  name: number_of_participants
+                  type: INT
+              - column:
+                  name: location
+                  type: VARCHAR(255)
+              - column:
+                  name: amount
+                  type: DOUBLE
+            tableName: competitions
+  - changeSet:
+      id: 1704793798437-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_fishes
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: average_weight
+                  type: DOUBLE
+              - column:
+                  name: image
+                  type: TEXT
+              - column:
+                  name: level_id
+                  type: BIGINT
+            tableName: fishes
+  - changeSet:
+      id: 1704793798437-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_huntings
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: number_of_fish
+                  type: INT
+              - column:
+                  name: fish_id
+                  type: BIGINT
+              - column:
+                  name: member_id
+                  type: BIGINT
+              - column:
+                  name: competition_id
+                  type: BIGINT
+            tableName: huntings
+  - changeSet:
+      id: 1704793798437-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_levels
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: code
+                  type: INT
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: points
+                  type: INT
+            tableName: levels
+  - changeSet:
+      id: 1704793798437-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_members
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: num
+                  type: INT
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: accession_date
+                  type: DATE
+              - column:
+                  name: nationality
+                  type: VARCHAR(255)
+              - column:
+                  name: identity_type
+                  type: VARCHAR(255)
+              - column:
+                  name: identity_number
+                  type: VARCHAR(255)
+            tableName: members
+  - changeSet:
+      id: 1704793798437-6
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: rank
+                  type: INT
+              - column:
+                  name: score
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_rankings
+                  name: member_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_rankings
+                  name: competition_id
+                  type: BIGINT
+            tableName: rankings
+  - changeSet:
+      id: 1704793798437-7
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: code
+            constraintName: uc_competitions_code
+            tableName: competitions
+  - changeSet:
+      id: 1704793798437-8
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uc_fishes_name
+            tableName: fishes
+  - changeSet:
+      id: 1704793798437-9
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: code
+            constraintName: uc_levels_code
+            tableName: levels
+  - changeSet:
+      id: 1704793798437-10
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: identity_number
+            constraintName: uc_members_identity_number
+            tableName: members
+  - changeSet:
+      id: 1704793798437-11
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: level_id
+            baseTableName: fishes
+            constraintName: FK_FISHES_ON_LEVEL
+            referencedColumnNames: id
+            referencedTableName: levels
+  - changeSet:
+      id: 1704793798437-12
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: competition_id
+            baseTableName: huntings
+            constraintName: FK_HUNTINGS_ON_COMPETITION
+            referencedColumnNames: id
+            referencedTableName: competitions
+  - changeSet:
+      id: 1704793798437-13
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: fish_id
+            baseTableName: huntings
+            constraintName: FK_HUNTINGS_ON_FISH
+            referencedColumnNames: id
+            referencedTableName: fishes
+  - changeSet:
+      id: 1704793798437-14
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: member_id
+            baseTableName: huntings
+            constraintName: FK_HUNTINGS_ON_MEMBER
+            referencedColumnNames: id
+            referencedTableName: members
+  - changeSet:
+      id: 1704793798437-15
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: competition_id
+            baseTableName: rankings
+            constraintName: FK_RANKINGS_ON_COMPETITION
+            referencedColumnNames: id
+            referencedTableName: competitions
+  - changeSet:
+      id: 1704793798437-16
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: member_id
+            baseTableName: rankings
+            constraintName: FK_RANKINGS_ON_MEMBER
+            referencedColumnNames: id
+            referencedTableName: members
+
