@@ -1,9 +1,8 @@
-package com.aftas.dto.response;
+package com.aftas.domain.dto.response;
 
-import com.aftas.enums.IdentityDocumentationType;
+import com.aftas.domain.enums.IdentityDocumentationType;
 import lombok.*;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Builder

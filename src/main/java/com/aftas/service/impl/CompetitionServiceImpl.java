@@ -1,10 +1,10 @@
 package com.aftas.service.impl;
 
-import com.aftas.domain.Competition;
-import com.aftas.domain.Member;
-import com.aftas.domain.Ranking;
-import com.aftas.domain.embedded.MemberCompetition;
-import com.aftas.dto.response.CompetitionScoreResponseDto;
+import com.aftas.domain.entities.Competition;
+import com.aftas.domain.entities.Member;
+import com.aftas.domain.entities.Ranking;
+import com.aftas.domain.entities.embedded.MemberCompetition;
+import com.aftas.domain.dto.response.CompetitionScoreResponseDto;
 import com.aftas.exception.ValidationException;
 import com.aftas.repository.CompetitionRepository;
 import com.aftas.repository.MemberRepository;

@@ -1,4 +1,4 @@
-package com.aftas.domain.embedded;
+package com.aftas.domain.entities.embedded;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

@@ -1,6 +1,6 @@
 package com.aftas.repository;
 
-import com.aftas.domain.Member;
+import com.aftas.domain.entities.Member;
 
 import java.util.List;
 import java.util.Optional;

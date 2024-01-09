@@ -1,4 +1,4 @@
-package com.aftas.domain;
+package com.aftas.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.aftas.domain;
+package com.aftas.domain.entities;
 
-import com.aftas.domain.embedded.MemberCompetition;
+import com.aftas.domain.entities.embedded.MemberCompetition;
 import jakarta.persistence.*;
 import lombok.*;
 

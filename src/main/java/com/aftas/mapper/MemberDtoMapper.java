@@ -1,10 +1,8 @@
 package com.aftas.mapper;
 
-import com.aftas.domain.Member;
-import com.aftas.dto.request.MemberRequestDto;
-import com.aftas.dto.response.MemberResponseDto;
-
-import javax.swing.text.html.parser.Entity;
+import com.aftas.domain.entities.Member;
+import com.aftas.domain.dto.request.MemberRequestDto;
+import com.aftas.domain.dto.response.MemberResponseDto;
 
 public class MemberDtoMapper {
 

@@ -1,8 +1,8 @@
 package com.aftas.mapper;
 
-import com.aftas.domain.Fish;
-import com.aftas.domain.Level;
-import com.aftas.dto.FishDto;
+import com.aftas.domain.entities.Fish;
+import com.aftas.domain.entities.Level;
+import com.aftas.domain.dto.FishDto;
 
 public class FishDtoMapper {
     private FishDtoMapper() {

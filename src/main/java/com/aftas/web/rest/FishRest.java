@@ -1,7 +1,7 @@
 package com.aftas.web.rest;
 
-import com.aftas.domain.Fish;
-import com.aftas.dto.FishDto;
+import com.aftas.domain.entities.Fish;
+import com.aftas.domain.dto.FishDto;
 import com.aftas.exception.ValidationException;
 import com.aftas.mapper.FishDtoMapper;
 import com.aftas.service.FishService;

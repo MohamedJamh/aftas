@@ -1,4 +1,4 @@
-package com.aftas.dto.response;
+package com.aftas.domain.dto.response;
 
 import lombok.*;
 

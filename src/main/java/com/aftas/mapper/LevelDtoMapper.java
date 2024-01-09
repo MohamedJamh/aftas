@@ -1,7 +1,7 @@
 package com.aftas.mapper;
 
-import com.aftas.domain.Level;
-import com.aftas.dto.LevelDto;
+import com.aftas.domain.entities.Level;
+import com.aftas.domain.dto.LevelDto;
 
 public class LevelDtoMapper {
     private LevelDtoMapper() {

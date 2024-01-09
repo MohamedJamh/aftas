@@ -1,10 +1,8 @@
-package com.aftas.dto.request;
+package com.aftas.domain.dto.request;
 
-import com.aftas.dto.FishDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
 
 @Builder
 @NoArgsConstructor

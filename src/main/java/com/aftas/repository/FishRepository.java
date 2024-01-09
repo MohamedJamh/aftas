@@ -1,6 +1,6 @@
 package com.aftas.repository;
 
-import com.aftas.domain.Fish;
+import com.aftas.domain.entities.Fish;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

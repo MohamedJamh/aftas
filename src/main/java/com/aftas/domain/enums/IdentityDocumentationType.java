@@ -1,4 +1,4 @@
-package com.aftas.enums;
+package com.aftas.domain.enums;
 
 public enum IdentityDocumentationType {
     CIN,

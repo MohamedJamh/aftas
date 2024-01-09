@@ -1,7 +1,7 @@
 package com.aftas.mapper;
 
-import com.aftas.domain.Hunting;
-import com.aftas.dto.response.HuntingResponseDto;
+import com.aftas.domain.entities.Hunting;
+import com.aftas.domain.dto.response.HuntingResponseDto;
 
 public class HuntingDtoMapper {
 

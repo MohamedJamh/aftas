@@ -1,4 +1,4 @@
-package com.aftas.dto.request;
+package com.aftas.domain.dto.request;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

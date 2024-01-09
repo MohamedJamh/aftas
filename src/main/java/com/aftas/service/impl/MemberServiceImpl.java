@@ -1,11 +1,10 @@
 package com.aftas.service.impl;
 
-import com.aftas.domain.Member;
+import com.aftas.domain.entities.Member;
 import com.aftas.exception.ValidationException;
 import com.aftas.repository.MemberRepository;
 import com.aftas.service.MemberService;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import com.aftas.utils.ErrorMessage;

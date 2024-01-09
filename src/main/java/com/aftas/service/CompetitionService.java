@@ -1,8 +1,8 @@
 package com.aftas.service;
 
-import com.aftas.domain.Competition;
-import com.aftas.domain.Member;
-import com.aftas.dto.response.CompetitionScoreResponseDto;
+import com.aftas.domain.entities.Competition;
+import com.aftas.domain.entities.Member;
+import com.aftas.domain.dto.response.CompetitionScoreResponseDto;
 import com.aftas.exception.ValidationException;
 import org.springframework.stereotype.Service;
 

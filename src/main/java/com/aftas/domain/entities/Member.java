@@ -1,6 +1,6 @@
-package com.aftas.domain;
+package com.aftas.domain.entities;
 
-import com.aftas.enums.IdentityDocumentationType;
+import com.aftas.domain.enums.IdentityDocumentationType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,8 +27,6 @@ public class Member {
     private IdentityDocumentationType identityType;
     @Column(unique = true)
     private String identityNumber;
-
-
     @OneToMany(mappedBy = "member")
     private List<Ranking> competitions;
 }

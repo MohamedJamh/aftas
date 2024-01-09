@@ -1,14 +1,13 @@
 package com.aftas.web.rest;
 
-import com.aftas.domain.Competition;
-import com.aftas.dto.CompetitionDto;
-import com.aftas.dto.response.CompetitionScoreResponseDto;
-import com.aftas.dto.response.MemberResponseDto;
+import com.aftas.domain.entities.Competition;
+import com.aftas.domain.dto.CompetitionDto;
+import com.aftas.domain.dto.response.CompetitionScoreResponseDto;
+import com.aftas.domain.dto.response.MemberResponseDto;
 import com.aftas.exception.ValidationException;
 import com.aftas.mapper.CompetitionDtoMapper;
 import com.aftas.mapper.MemberDtoMapper;
 import com.aftas.service.CompetitionService;
-import com.aftas.service.MemberService;
 import com.aftas.utils.Response;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

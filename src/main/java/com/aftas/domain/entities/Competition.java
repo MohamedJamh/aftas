@@ -1,4 +1,4 @@
-package com.aftas.domain;
+package com.aftas.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
@@ -28,7 +28,6 @@ public class Competition {
     private Integer numberOfParticipants;
     private String location;
     private Double amount;
-
     @OneToMany(mappedBy = "competition")
     private List<Ranking> members;
 }

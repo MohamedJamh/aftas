@@ -1,6 +1,6 @@
 package com.aftas.service;
 
-import com.aftas.domain.Fish;
+import com.aftas.domain.entities.Fish;
 import com.aftas.exception.ValidationException;
 import org.springframework.stereotype.Service;
 

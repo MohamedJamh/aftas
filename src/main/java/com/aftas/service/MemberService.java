@@ -1,6 +1,6 @@
 package com.aftas.service;
 
-import com.aftas.domain.Member;
+import com.aftas.domain.entities.Member;
 import com.aftas.exception.ValidationException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;

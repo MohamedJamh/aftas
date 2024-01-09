@@ -1,11 +1,10 @@
-package com.aftas.dto.request;
+package com.aftas.domain.dto.request;
 
-import com.aftas.enums.IdentityDocumentationType;
+import com.aftas.domain.enums.IdentityDocumentationType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Builder

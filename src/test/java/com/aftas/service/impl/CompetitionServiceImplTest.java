@@ -1,6 +1,6 @@
 package com.aftas.service.impl;
 
-import com.aftas.domain.Competition;
+import com.aftas.domain.entities.Competition;
 import com.aftas.exception.ValidationException;
 import com.aftas.repository.CompetitionRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,12 +12,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
