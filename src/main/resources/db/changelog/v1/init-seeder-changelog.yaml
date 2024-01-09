@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: "idder"
+      changes:
+        - loadData:
+            relativeToChangelogFile: true
+            file: "seeders/level.csv"
+            separator: ","
+            tableName: levels
+            columns:
+              - column:
+                  name: "code"
+                  header: "code"
+              - column:
+                  name: "points"
+                  header: "points"
+              - column:
+                  name: "description"
+                  header: "description"
+  - changeSet:
+      id: 2
+      author: "idder"
+      changes:
+        - loadData:
+            relativeToChangelogFile: true
+            file: "seeders/fish.csv"
+            separator: ","
+            tableName: fishes
+            columns:
+              - column:
+                  name: "name"
+                  header: "name"
+              - column:
+                  name: "average_weight"
+                  header: "averageWeight"
+              - column:
+                  name: "level_id"
+                  header: "levelId"
