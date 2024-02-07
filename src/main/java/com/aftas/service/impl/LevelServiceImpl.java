@@ -1,7 +1,7 @@
 package com.aftas.service.impl;
 
 import com.aftas.domain.entities.Level;
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import com.aftas.repository.LevelRepository;
 import com.aftas.service.LevelService;
 import com.aftas.utils.ErrorMessage;

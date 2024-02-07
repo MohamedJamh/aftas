@@ -1,7 +1,7 @@
 package com.aftas.web.rest;
 
 import com.aftas.domain.dto.response.RankingResponseDto;
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import com.aftas.service.RankingService;
 import com.aftas.utils.Response;
 import org.springframework.http.ResponseEntity;

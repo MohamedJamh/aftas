@@ -2,7 +2,7 @@ package com.aftas.service;
 
 import com.aftas.domain.entities.Ranking;
 import com.aftas.domain.dto.response.RankingResponseDto;
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

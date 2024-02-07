@@ -1,6 +1,6 @@
-package com.aftas.advice;
+package com.aftas.exception;
 
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import com.aftas.utils.ErrorMessage;
 import com.aftas.utils.Response;
 import org.springframework.http.HttpStatus;

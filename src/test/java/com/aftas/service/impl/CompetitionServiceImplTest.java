@@ -1,7 +1,7 @@
 package com.aftas.service.impl;
 
 import com.aftas.domain.entities.Competition;
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import com.aftas.repository.CompetitionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -2,7 +2,7 @@ package com.aftas.service;
 
 import com.aftas.domain.entities.Hunting;
 import com.aftas.domain.dto.request.HuntingRequestDto;
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

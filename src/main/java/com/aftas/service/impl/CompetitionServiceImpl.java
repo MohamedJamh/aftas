@@ -5,7 +5,7 @@ import com.aftas.domain.entities.Member;
 import com.aftas.domain.entities.Ranking;
 import com.aftas.domain.entities.embedded.MemberCompetition;
 import com.aftas.domain.dto.response.CompetitionScoreResponseDto;
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import com.aftas.repository.CompetitionRepository;
 import com.aftas.repository.MemberRepository;
 import com.aftas.repository.RankingRepository;

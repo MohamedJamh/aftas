@@ -2,8 +2,8 @@ package com.aftas.web.rest;
 
 import com.aftas.domain.entities.Level;
 import com.aftas.domain.dto.LevelDto;
-import com.aftas.exception.ValidationException;
-import com.aftas.mapper.LevelDtoMapper;
+import com.aftas.exception.custom.ValidationException;
+import com.aftas.domain.mapper.LevelDtoMapper;
 import com.aftas.service.LevelService;
 import com.aftas.utils.Response;
 import jakarta.validation.Valid;

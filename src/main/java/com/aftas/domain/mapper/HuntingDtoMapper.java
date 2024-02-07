@@ -1,4 +1,4 @@
-package com.aftas.mapper;
+package com.aftas.domain.mapper;
 
 import com.aftas.domain.entities.Hunting;
 import com.aftas.domain.dto.response.HuntingResponseDto;

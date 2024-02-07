@@ -1,4 +1,4 @@
-package com.aftas.exception;
+package com.aftas.exception.custom;
 
 import com.aftas.utils.ErrorMessage;
 import lombok.AllArgsConstructor;

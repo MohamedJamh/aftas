@@ -3,7 +3,7 @@ package com.aftas.service.impl;
 import com.aftas.domain.entities.Competition;
 import com.aftas.domain.entities.Ranking;
 import com.aftas.domain.dto.response.RankingResponseDto;
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import com.aftas.repository.RankingRepository;
 import com.aftas.service.CompetitionService;
 import com.aftas.service.RankingService;

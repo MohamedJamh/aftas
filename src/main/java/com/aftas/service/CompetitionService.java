@@ -3,7 +3,7 @@ package com.aftas.service;
 import com.aftas.domain.entities.Competition;
 import com.aftas.domain.entities.Member;
 import com.aftas.domain.dto.response.CompetitionScoreResponseDto;
-import com.aftas.exception.ValidationException;
+import com.aftas.exception.custom.ValidationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.aftas.mapper;
+package com.aftas.domain.mapper;
 
 import com.aftas.domain.entities.Fish;
 import com.aftas.domain.entities.Level;
