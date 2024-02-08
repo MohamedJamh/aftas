@@ -20,3 +20,10 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yml
 seeders:
   enabled: false
+jwt:
+  access:
+    expirationInMs: 1440000 # 24 minutes
+  refresh:
+    expirationInMonths: 1
+  signing:
+    key: p5eHhtsr9qvSTaybbxGgYkhvnT7PYcqCxi6tNUEyXvQ=
