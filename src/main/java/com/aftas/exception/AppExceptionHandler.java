@@ -1,10 +1,15 @@
 package com.aftas.exception;
 
+import com.aftas.exception.custom.BadRequestException;
+import com.aftas.exception.custom.InValidRefreshTokenException;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.utils.ErrorMessage;
 import com.aftas.utils.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -43,5 +48,48 @@ public class AppExceptionHandler {
                 HttpStatus.BAD_REQUEST
         );
     }
-    //from github dev
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Response<String>> userNotFound(UsernameNotFoundException ex) {
+        Response<String> response = new Response<>();
+        response.setMessage("User not found");
+        response.setErrors(
+                List.of(
+                        ErrorMessage.builder()
+                                .message("User with associated email not found")
+                                .build()
+                )
+        );
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Response<String>> badCredentials(BadCredentialsException ex) {
+        Response<String> response = new Response<>();
+        response.setMessage("Invalid email or password");
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+    @ExceptionHandler({
+            BadRequestException.class,
+            InValidRefreshTokenException.class,
+            AccessDeniedException.class,
+            Exception.class
+    })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Response<String>> abstractBadRequest(Exception ex) {
+        Response<String> response = new Response<>();
+        response.setMessage(ex.getMessage());
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
+    }
 }
