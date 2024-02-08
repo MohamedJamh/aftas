@@ -19,9 +19,9 @@ public interface RankingRepository extends JpaRepository<Ranking, Long> {
     Integer countRankedMemberByCompetition(Long competitionId);
     @Query("SELECT r FROM Ranking r WHERE r.competition.id = :competitionId")
     List<Ranking> getRankingsByCompetitionOrderByScoreDesc(Long competitionId);
-    @Query("SELECT new com.aftas.domain.dto.response.RankingResponseDto(r.rank, r.score, r.member.firstName,r.member.lastName,r.member.nationality,r.member.num) " +
+    @Query("SELECT new com.aftas.domain.dto.response.ranking.RankingResponseDto(r.rank, r.score, r.member.firstName,r.member.lastName,r.member.nationality,r.member.num) " +
             "FROM Ranking r WHERE r.competition.id = :competitionId")
     List<RankingResponseDto> getRankingWithMemberByCompetition(Long competitionId);
-    @Query("Select new com.aftas.domain.dto.response.CompetitionScoreResponseDto(r.member.num,r.member.firstName,r.member.lastName,r.score) from Ranking r where r.competition.id = :competitionId order by r.score desc")
+    @Query("Select new com.aftas.domain.dto.response.competition.CompetitionScoreResponseDto(r.member.num,r.member.firstName,r.member.lastName,r.score) from Ranking r where r.competition.id = :competitionId order by r.score desc")
     List<CompetitionScoreResponseDto> getRealTimeScore(Long competitionId);
 }
