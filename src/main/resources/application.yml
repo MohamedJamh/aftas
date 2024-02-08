@@ -7,10 +7,10 @@ server:
 
 spring:
   datasource:
-    #url: jdbc:mysql://localhost:3306/aftas?createDatabaseIfNotExist=true
-    url: jdbc:mysql://mysqldb:3306/aftas?createDatabaseIfNotExist=true # for docker with embedded mysql container
-    username: idder
-    password: idderjamh
+    url: jdbc:mysql://localhost:3306/aftas?createDatabaseIfNotExist=true
+    #url: jdbc:mysql://mysqldb:3306/aftas?createDatabaseIfNotExist=true # for docker with embedded mysql container
+    username: root
+    password:
   jpa:
     hibernate:
       ddl-auto: none
@@ -27,3 +27,11 @@ jwt:
     expirationInMonths: 1
   signing:
     key: p5eHhtsr9qvSTaybbxGgYkhvnT7PYcqCxi6tNUEyXvQ=
+
+logging:
+  level:
+    org:
+      springframework:
+        security: trace
+        web: trace
+    liquibase: trace
