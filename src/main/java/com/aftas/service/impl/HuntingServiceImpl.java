@@ -1,7 +1,7 @@
 package com.aftas.service.impl;
 
 import com.aftas.domain.entities.*;
-import com.aftas.domain.dto.request.HuntingRequestDto;
+import com.aftas.domain.dto.request.hunting.HuntingRequestDto;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.repository.HuntingRepository;
 import com.aftas.repository.RankingRepository;
