@@ -1,4 +1,4 @@
-package com.aftas.domain.dto;
+package com.aftas.domain.dto.request.level;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class LevelDto {
+public class LevelRequestDto {
     private Long id;
     @NotNull(message = "Code is required")
     private Integer code;

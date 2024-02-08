@@ -1,4 +1,4 @@
-package com.aftas.domain.dto.request;
+package com.aftas.domain.dto.request.member;
 
 import com.aftas.domain.enums.IdentityDocumentationType;
 import jakarta.validation.constraints.NotBlank;

@@ -2,14 +2,14 @@ package com.aftas.domain.mapper;
 
 import com.aftas.domain.entities.Fish;
 import com.aftas.domain.entities.Level;
-import com.aftas.domain.dto.FishDto;
+import com.aftas.domain.dto.request.fish.FishRequestDto;
 
 public class FishDtoMapper {
     private FishDtoMapper() {
     }
 
-    public static FishDto toDto(Fish fish) {
-        return FishDto.builder()
+    public static FishRequestDto toDto(Fish fish) {
+        return FishRequestDto.builder()
                 .id(fish.getId())
                 .name(fish.getName())
                 .averageWeight(fish.getAverageWeight())
@@ -17,7 +17,7 @@ public class FishDtoMapper {
                 .image(fish.getImage())
                 .build();
     }
-    public static Fish toEntity(FishDto fish) {
+    public static Fish toEntity(FishRequestDto fish) {
         return Fish.builder()
                 .name(fish.getName())
                 .averageWeight(fish.getAverageWeight())

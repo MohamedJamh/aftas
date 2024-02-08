@@ -1,4 +1,4 @@
-package com.aftas.domain.dto;
+package com.aftas.domain.dto.request.competition;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CompetitionDto {
+public class CompetitionRequestDto {
     private Long id;
     private String code;
     @NotNull(message = "Date cannot be null")

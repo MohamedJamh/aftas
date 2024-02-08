@@ -1,4 +1,4 @@
-package com.aftas.domain.dto.request;
+package com.aftas.domain.dto.request.hunting;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

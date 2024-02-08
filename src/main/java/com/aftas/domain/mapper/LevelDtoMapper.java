@@ -1,14 +1,14 @@
 package com.aftas.domain.mapper;
 
 import com.aftas.domain.entities.Level;
-import com.aftas.domain.dto.LevelDto;
+import com.aftas.domain.dto.request.level.LevelRequestDto;
 
 public class LevelDtoMapper {
     private LevelDtoMapper() {
     }
 
-    public static LevelDto toDto(Level level) {
-        return LevelDto.builder()
+    public static LevelRequestDto toDto(Level level) {
+        return LevelRequestDto.builder()
                 .id(level.getId())
                 .code(level.getCode())
                 .description(level.getDescription())
@@ -16,7 +16,7 @@ public class LevelDtoMapper {
                 .build();
     }
 
-    public static Level toEntity(LevelDto level) {
+    public static Level toEntity(LevelRequestDto level) {
         return Level.builder()
                 .code(level.getCode())
                 .description(level.getDescription())

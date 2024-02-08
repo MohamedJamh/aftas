@@ -1,14 +1,14 @@
 package com.aftas.domain.mapper;
 
 import com.aftas.domain.entities.Competition;
-import com.aftas.domain.dto.CompetitionDto;
+import com.aftas.domain.dto.request.competition.CompetitionRequestDto;
 
 public class CompetitionDtoMapper {
 
     private CompetitionDtoMapper() {
     }
 
-    public static Competition toEntity(CompetitionDto competitionDto) {
+    public static Competition toEntity(CompetitionRequestDto competitionDto) {
         return Competition.builder()
                 .date(competitionDto.getDate())
                 .startTime(competitionDto.getStartTime())
@@ -18,8 +18,8 @@ public class CompetitionDtoMapper {
                 .build();
     }
 
-    public static CompetitionDto toDto(Competition competition) {
-        return CompetitionDto.builder()
+    public static CompetitionRequestDto toDto(Competition competition) {
+        return CompetitionRequestDto.builder()
                 .id(competition.getId())
                 .code(competition.getCode())
                 .date(competition.getDate())

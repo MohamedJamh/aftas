@@ -1,4 +1,4 @@
-package com.aftas.domain.dto;
+package com.aftas.domain.dto.request.fish;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class FishDto {
+public class FishRequestDto {
     private Long id;
 
     @NotNull(message = "Fish name cannot be null")
