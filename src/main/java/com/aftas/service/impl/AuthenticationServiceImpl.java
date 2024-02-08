@@ -1,14 +1,15 @@
-package com.auth0.service.impl;
+package com.aftas.service.impl;
 
-import com.auth0.domain.dto.response.auth.JwtAuthenticationResponseDto;
-import com.auth0.domain.entity.User;
-import com.auth0.exception.customexceptions.BadRequestException;
-import com.auth0.exception.customexceptions.ValidationException;
-import com.auth0.repository.RoleRepository;
-import com.auth0.repository.UserRepository;
-import com.auth0.service.AuthenticationService;
-import com.auth0.service.JwtService;
-import com.auth0.utils.ErrorMessage;
+
+import com.aftas.domain.dto.response.auth.JwtAuthenticationResponseDto;
+import com.aftas.domain.entities.User;
+import com.aftas.exception.custom.BadRequestException;
+import com.aftas.exception.custom.ValidationException;
+import com.aftas.repository.RoleRepository;
+import com.aftas.repository.UserRepository;
+import com.aftas.service.AuthenticationService;
+import com.aftas.service.JwtService;
+import com.aftas.utils.ErrorMessage;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -47,12 +47,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponseDto signup(User user) throws ValidationException {
         if(userRepository.findByEmail(user.getEmail()).isPresent())
             throw new ValidationException(
-                    List.of(
-                            ErrorMessage.builder()
-                                    .field("email")
-                                    .message("Email already exists")
-                                    .build()
-                    )
+                ErrorMessage.builder()
+                        .message("Email already exists")
+                        .build()
             );
         roleRepository.findByName("USER").ifPresent(role -> user.setRoles(Set.of(role)));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
