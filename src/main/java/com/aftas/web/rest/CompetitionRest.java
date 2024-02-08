@@ -1,9 +1,9 @@
 package com.aftas.web.rest;
 
 import com.aftas.domain.entities.Competition;
-import com.aftas.domain.dto.CompetitionDto;
-import com.aftas.domain.dto.response.CompetitionScoreResponseDto;
-import com.aftas.domain.dto.response.MemberResponseDto;
+import com.aftas.domain.dto.request.competition.CompetitionRequestDto;
+import com.aftas.domain.dto.response.competition.CompetitionScoreResponseDto;
+import com.aftas.domain.dto.response.member.MemberResponseDto;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.domain.mapper.CompetitionDtoMapper;
 import com.aftas.domain.mapper.MemberDtoMapper;
@@ -27,9 +27,9 @@ public class CompetitionRest {
     }
 
     @GetMapping
-    public ResponseEntity<Response<List<CompetitionDto>>> getAllCompetitions() {
-        Response<List<CompetitionDto>> response = new Response<>();
-        List<CompetitionDto> competitions = new ArrayList<>();
+    public ResponseEntity<Response<List<CompetitionRequestDto>>> getAllCompetitions() {
+        Response<List<CompetitionRequestDto>> response = new Response<>();
+        List<CompetitionRequestDto> competitions = new ArrayList<>();
         competitionService.getAllCompetitions()
                 .stream()
                 .map(CompetitionDtoMapper::toDto)
@@ -40,8 +40,8 @@ public class CompetitionRest {
     }
 
     @PostMapping
-    public ResponseEntity<Response<CompetitionDto>> createCompetition(@RequestBody @Valid CompetitionDto competition) throws ValidationException {
-        Response<CompetitionDto> response = new Response<>();
+    public ResponseEntity<Response<CompetitionRequestDto>> createCompetition(@RequestBody @Valid CompetitionRequestDto competition) throws ValidationException {
+        Response<CompetitionRequestDto> response = new Response<>();
         Competition savedCompetition = competitionService.createCompetition(CompetitionDtoMapper.toEntity(competition));
         response.setMessage("Competition created successfully");
         response.setResult(CompetitionDtoMapper.toDto(savedCompetition));
@@ -49,8 +49,8 @@ public class CompetitionRest {
     }
 
     @GetMapping("/{competitionId}/enroll/{memberNumber}")
-    public ResponseEntity<Response<CompetitionDto>> enrollMember(@PathVariable("competitionId") String competitionId, @PathVariable("memberNumber") Integer memberNumber) throws ValidationException {
-        Response<CompetitionDto> response = new Response<>();
+    public ResponseEntity<Response<CompetitionRequestDto>> enrollMember(@PathVariable("competitionId") String competitionId, @PathVariable("memberNumber") Integer memberNumber) throws ValidationException {
+        Response<CompetitionRequestDto> response = new Response<>();
         competitionService.enrollMember(Long.valueOf(competitionId), memberNumber);
         response.setMessage("Member enrolled successfully");
         return ResponseEntity.ok().body(response);
@@ -71,8 +71,8 @@ public class CompetitionRest {
     }
 
     @GetMapping("/upcoming")
-    public ResponseEntity<Response<List<CompetitionDto>>> upcomingCompetition() throws ValidationException{
-        Response<List<CompetitionDto>> response = new Response<>();
+    public ResponseEntity<Response<List<CompetitionRequestDto>>> upcomingCompetition() throws ValidationException{
+        Response<List<CompetitionRequestDto>> response = new Response<>();
         List<Competition> competitions = competitionService.upcomingCompetition();
         if(competitions.isEmpty())
             response.setMessage("No upcoming competition");

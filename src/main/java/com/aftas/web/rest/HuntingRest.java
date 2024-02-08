@@ -1,8 +1,8 @@
 package com.aftas.web.rest;
 
 import com.aftas.domain.entities.Hunting;
-import com.aftas.domain.dto.request.HuntingRequestDto;
-import com.aftas.domain.dto.response.HuntingResponseDto;
+import com.aftas.domain.dto.request.hunting.HuntingRequestDto;
+import com.aftas.domain.dto.response.hunting.HuntingResponseDto;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.domain.mapper.HuntingDtoMapper;
 import com.aftas.service.HuntingService;

@@ -1,9 +1,9 @@
 package com.aftas.web.rest;
 
 import com.aftas.domain.entities.Member;
-import com.aftas.domain.dto.request.MemberRequestDto;
-import com.aftas.domain.dto.response.MemberPageableDto;
-import com.aftas.domain.dto.response.MemberResponseDto;
+import com.aftas.domain.dto.request.member.MemberRequestDto;
+import com.aftas.domain.dto.response.member.MemberPageableDto;
+import com.aftas.domain.dto.response.member.MemberResponseDto;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.domain.mapper.MemberDtoMapper;
 import com.aftas.service.MemberService;

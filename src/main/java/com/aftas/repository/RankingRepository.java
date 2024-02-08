@@ -1,8 +1,8 @@
 package com.aftas.repository;
 
 import com.aftas.domain.entities.Ranking;
-import com.aftas.domain.dto.response.CompetitionScoreResponseDto;
-import com.aftas.domain.dto.response.RankingResponseDto;
+import com.aftas.domain.dto.response.competition.CompetitionScoreResponseDto;
+import com.aftas.domain.dto.response.ranking.RankingResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

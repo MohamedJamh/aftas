@@ -1,7 +1,7 @@
 package com.aftas.web.rest;
 
 import com.aftas.domain.entities.Level;
-import com.aftas.domain.dto.LevelDto;
+import com.aftas.domain.dto.request.level.LevelRequestDto;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.domain.mapper.LevelDtoMapper;
 import com.aftas.service.LevelService;
@@ -23,9 +23,9 @@ public class LevelRest {
     }
 
     @GetMapping
-    public ResponseEntity<Response<List<LevelDto>>> getAllLevels() {
-        Response<List<LevelDto>> response = new Response<>();
-        List<LevelDto> levels = new ArrayList<>();
+    public ResponseEntity<Response<List<LevelRequestDto>>> getAllLevels() {
+        Response<List<LevelRequestDto>> response = new Response<>();
+        List<LevelRequestDto> levels = new ArrayList<>();
         levelService.getAllLevels().stream().map(LevelDtoMapper::toDto).forEach(levels::add);
         response.setMessage("Levels retrieved successfully");
         response.setResult(levels);
@@ -33,8 +33,8 @@ public class LevelRest {
     }
 
     @PostMapping
-    public ResponseEntity<Response<LevelDto>> saveLevel(@RequestBody @Valid LevelDto level) throws ValidationException {
-        Response<LevelDto> response = new Response<>();
+    public ResponseEntity<Response<LevelRequestDto>> saveLevel(@RequestBody @Valid LevelRequestDto level) throws ValidationException {
+        Response<LevelRequestDto> response = new Response<>();
         Level savedLevel = levelService.createLevel(LevelDtoMapper.toEntity(level));
         response.setMessage("Level created successfully");
         response.setResult(LevelDtoMapper.toDto(savedLevel));

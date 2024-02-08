@@ -1,6 +1,6 @@
 package com.aftas.web.rest;
 
-import com.aftas.domain.dto.response.RankingResponseDto;
+import com.aftas.domain.dto.response.ranking.RankingResponseDto;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.service.RankingService;
 import com.aftas.utils.Response;
