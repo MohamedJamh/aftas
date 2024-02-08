@@ -2,4 +2,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/v1/init-changelog.yaml
   - include:
-        file: db/changelog/v1/init-seeder-changelog.yaml
+      file: db/changelog/v1/init-seeder-changelog.yaml
+  - include:
+      file: db/changelog/v2/08-02-2024-11-31-changelog.yaml
+  - include:
+      file: db/changelog/v2/08-02-2024-11-31-seeder-changelog.yaml

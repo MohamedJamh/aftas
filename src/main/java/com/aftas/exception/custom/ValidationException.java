@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 public class ValidationException extends Exception{
-    private ErrorMessage errorMessage;
+    private final ErrorMessage errorMessage;
 }
