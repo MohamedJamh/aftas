@@ -11,6 +11,7 @@ import com.aftas.service.CompetitionService;
 import com.aftas.utils.Response;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class CompetitionRest {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('competition:read','competition:all','manage:all')")
     public ResponseEntity<Response<List<CompetitionRequestDto>>> getAllCompetitions() {
         Response<List<CompetitionRequestDto>> response = new Response<>();
         List<CompetitionRequestDto> competitions = new ArrayList<>();
