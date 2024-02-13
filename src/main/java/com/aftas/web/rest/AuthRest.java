@@ -11,9 +11,7 @@ import com.aftas.exception.custom.BadRequestException;
 import com.aftas.exception.custom.InValidRefreshTokenException;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.service.AuthenticationService;
-import com.aftas.service.JwtService;
 import com.aftas.service.RefreshTokenService;
-import com.aftas.service.UserService;
 import com.aftas.utils.Response;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -27,21 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthRest {
     private final AuthenticationService authenticationService;
     private final RefreshTokenService refreshTokenService;
-    private JwtService jwtService;
-    private UserService userService;
     private UserMapper userMapper;
 
     public AuthRest(
             AuthenticationService authenticationService,
             RefreshTokenService refreshTokenService,
-            JwtService jwtService,
-            UserService userService,
             UserMapper userMapper
     ) {
         this.authenticationService = authenticationService;
         this.refreshTokenService = refreshTokenService;
-        this.jwtService = jwtService;
-        this.userService = userService;
         this.userMapper = userMapper;
     }
 
@@ -74,7 +66,7 @@ public class AuthRest {
         return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping("/refreshToken")
+    @PostMapping("/refresh-token")
     public ResponseEntity<Response<RefreshTokenResponseDTO>> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDTO) throws InValidRefreshTokenException {
         Response<RefreshTokenResponseDTO> response = new Response<>();
         String refToken = authenticationService.refreshToken(refreshTokenRequestDTO.getRefreshToken());

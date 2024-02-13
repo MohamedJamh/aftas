@@ -5,6 +5,7 @@ import com.aftas.domain.dto.response.auth.JwtAuthenticationResponseDto;
 import com.aftas.domain.dto.response.jwt.RefreshTokenResponseDTO;
 import com.aftas.domain.entities.RefreshToken;
 import com.aftas.domain.entities.User;
+import com.aftas.domain.mapper.UserMapper;
 import com.aftas.exception.custom.BadRequestException;
 import com.aftas.exception.custom.InValidRefreshTokenException;
 import com.aftas.exception.custom.ValidationException;
@@ -35,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-
+    private final UserMapper userMapper;
     private final RefreshTokenService refreshTokenService;
     private UserService userService;
 
@@ -47,7 +48,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             AuthenticationManager authenticationManager,
             RoleRepository roleRepository,
             RefreshTokenService refreshTokenService,
-            UserService userService
+            UserService userService,
+            UserMapper userMapper
     ) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
@@ -56,6 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.passwordEncoder = passwordEncoder;
         this.refreshTokenService = refreshTokenService;
         this.userService = userService;
+        this.userMapper = userMapper;
     }
     @Override
     @Transactional
@@ -84,6 +87,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(optionalUser.isEmpty())
             throw new BadCredentialsException("Invalid email or password");
         return JwtAuthenticationResponseDto.builder()
+                .user(userMapper.toDto(optionalUser.get()))
                 .accessToken(jwtService.generateToken(user))
                 .build();
     }

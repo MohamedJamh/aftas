@@ -1,11 +1,15 @@
 package com.aftas.service.impl;
 
+import com.aftas.domain.entities.User;
 import com.aftas.repository.UserRepository;
 import com.aftas.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -34,5 +38,15 @@ public class UserServiceImpl implements UserService {
     public UserDetails getUserIfExitOrThrowException(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserProfile() {
+        return  (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
