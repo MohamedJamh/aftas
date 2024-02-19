@@ -1,0 +1,139 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1708335033955-14
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: huntings
+            constraintName: FK_HUNTINGS_ON_MEMBER
+  - changeSet:
+      id: 1708335033955-15
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: rankings
+            constraintName: FK_RANKINGS_ON_MEMBER
+  - changeSet:
+      id: 1708335033955-3
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: accession_date
+                  type: DATE
+              - column:
+                  name: identity_number
+                  type: VARCHAR(255)
+              - column:
+                  name: identity_type
+                  type: VARCHAR(255)
+              - column:
+                  name: nationality
+                  type: VARCHAR(255)
+              - column:
+                  name: num
+                  type: INT
+            tableName: users
+  - changeSet:
+      id: 1708335033955-8
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+            tableName: huntings
+  - changeSet:
+      id: 1708335033955-9
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+            tableName: rankings
+  - changeSet:
+      id: 1708335033955-10
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: identity_number
+            constraintName: uc_users_identity_number
+            tableName: users
+  - changeSet:
+      id: 1708335033955-12
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: huntings
+            constraintName: FK_HUNTINGS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1708335033955-13
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: rankings
+            constraintName: FK_RANKINGS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1708335033955-17
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: members
+  - changeSet:
+      id: 1708335033955-18
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: member_id
+            tableName: rankings
+  - changeSet:
+      id: 1708335033955-19
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: member_id
+            tableName: huntings
+  - changeSet:
+      id: 1708335033955-2
+      author: idder
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: rankings
+            constraintName: FK_RANKINGS_ON_COMPETITION
+        - dropPrimaryKey:
+            constraintName: PRIMARY KEY
+            tableName: rankings
+        - addForeignKeyConstraint:
+            baseColumnNames: competition_id
+            baseTableName: rankings
+            constraintName: FK_RANKINGS_ON_COMPETITION
+            referencedColumnNames: id
+            referencedTableName: competitions
+        - addPrimaryKey:
+            columnNames: user_id, competition_id
+            constraintName: pk_rankings
+            tableName: rankings
+

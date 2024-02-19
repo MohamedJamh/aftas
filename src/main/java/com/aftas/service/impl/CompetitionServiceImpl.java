@@ -1,16 +1,16 @@
 package com.aftas.service.impl;
 
 import com.aftas.domain.entities.Competition;
-import com.aftas.domain.entities.Member;
 import com.aftas.domain.entities.Ranking;
-import com.aftas.domain.entities.embedded.MemberCompetition;
+import com.aftas.domain.entities.User;
+import com.aftas.domain.entities.embedded.UserCompetition;
 import com.aftas.domain.dto.response.competition.CompetitionScoreResponseDto;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.repository.CompetitionRepository;
-import com.aftas.repository.MemberRepository;
+import com.aftas.repository.UserRepository;
 import com.aftas.repository.RankingRepository;
 import com.aftas.service.CompetitionService;
-import com.aftas.service.MemberService;
+import com.aftas.service.UserService;
 import com.aftas.utils.ErrorMessage;
 import org.springframework.stereotype.Component;
 
@@ -24,14 +24,13 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     private final CompetitionRepository competitionRepository;
     private final RankingRepository rankRepository;
-    private final MemberService memberService;
-
-    private final MemberRepository memberRepository;
-    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankRepository , MemberService memberService, MemberRepository memberRepository) {
+    private final UserService userService;
+    private final UserRepository userRepository;
+    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RankingRepository rankRepository , UserService userService, UserRepository memberRepository) {
         this.competitionRepository = competitionRepository;
         this.rankRepository = rankRepository;
-        this.memberService = memberService;
-        this.memberRepository = memberRepository;
+        this.userService = userService;
+        this.userRepository = memberRepository;
     }
 
     @Override
@@ -57,11 +56,11 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
-    public void enrollMember(Long competitionId, Integer memberCode) throws ValidationException {
+    public void enrollUser(Long competitionId, Integer userCode) throws ValidationException {
         Competition competition = getCompetitionIfExists(competitionId);
-        Member member = memberService.getMemberIfExistsByNumber(memberCode);
+        User user = userService.getUserIfExistsByNumber(userCode);
 
-        if(rankRepository.getRankingByCompetitionAndMember(competitionId, member.getId()).isPresent())
+        if(rankRepository.getRankingByCompetitionAndMember(competitionId, user.getId()).isPresent())
             throw new ValidationException(new ErrorMessage("Member already enrolled in this competition"));
 
         if(competition.getDate().isBefore(LocalDate.now()) || competition.getDate().equals(LocalDate.now()))
@@ -77,12 +76,12 @@ public class CompetitionServiceImpl implements CompetitionService {
         rankRepository.save(
                 Ranking.builder()
                         .id(
-                            MemberCompetition.builder()
-                                    .competitionId(competitionId)
-                                    .memberId(member.getId())
-                                    .build()
+                            UserCompetition.builder()
+                                .competitionId(competitionId)
+                                .userId(user.getId())
+                                .build()
                         )
-                        .member(member)
+                        .user(user)
                         .competition(competition)
                         .score(0)
                         .rank(0)
@@ -104,9 +103,9 @@ public class CompetitionServiceImpl implements CompetitionService {
 
 
     @Override
-    public List<Member> getMembersByCompetitions(Long competitionId) throws ValidationException {
+    public List<User> getUsersByCompetitions(Long competitionId) throws ValidationException {
         getCompetitionIfExists(competitionId);
-        return memberRepository.findAllByCompetition(competitionId);
+        return userRepository.findAllByCompetition(competitionId);
     }
 
     @Override

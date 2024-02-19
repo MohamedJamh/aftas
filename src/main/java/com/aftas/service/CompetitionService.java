@@ -1,8 +1,8 @@
 package com.aftas.service;
 
 import com.aftas.domain.entities.Competition;
-import com.aftas.domain.entities.Member;
 import com.aftas.domain.dto.response.competition.CompetitionScoreResponseDto;
+import com.aftas.domain.entities.User;
 import com.aftas.exception.custom.ValidationException;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +14,11 @@ public interface CompetitionService {
 
     Competition createCompetition(Competition competition) throws ValidationException;
 
-    void enrollMember(Long competitionId, Integer memberCode) throws ValidationException;
+    void enrollUser(Long competitionId, Integer userCode) throws ValidationException;
 
     Competition getCompetitionIfExists(Long competitionId) throws ValidationException;
 
-    List<Member> getMembersByCompetitions(Long competitionId) throws ValidationException;
+    List<User> getUsersByCompetitions(Long competitionId) throws ValidationException;
 
     List<Competition> upcomingCompetition();
 

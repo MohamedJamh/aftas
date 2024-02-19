@@ -16,15 +16,15 @@ import java.util.Optional;
 public class HuntingServiceImpl implements HuntingService {
 
     private final HuntingRepository huntingRepository;
-    private final MemberService memberService;
+    private final UserService userService;
     private final CompetitionService competitionService;
     private final FishService fishService;
     private final RankingService rankingService;
     private final RankingRepository rankingRepository;
 
-    public HuntingServiceImpl(HuntingRepository huntingRepository, MemberService memberService, CompetitionService competitionService, FishService fishService, RankingService rankingService, RankingRepository rankingRepository) {
+    public HuntingServiceImpl(HuntingRepository huntingRepository, UserService userService, CompetitionService competitionService, FishService fishService, RankingService rankingService, RankingRepository rankingRepository) {
         this.huntingRepository = huntingRepository;
-        this.memberService = memberService;
+        this.userService = userService;
         this.competitionService = competitionService;
         this.fishService = fishService;
         this.rankingService = rankingService;
@@ -34,24 +34,24 @@ public class HuntingServiceImpl implements HuntingService {
     @Override
     @Transactional
     public Optional<Hunting> createHunting(HuntingRequestDto huntingDto) throws ValidationException {
-        //todo : follow best practices and keep service clean without dots , create mapper to entity , send hunt entity and weight seperately
-        Member member = memberService.getMemberIfExistsById(huntingDto.getMemberId());
+        //todo : follow best practices and keep service clean without dto's , create mapper to entity , send hunt entity and weight seperately
+        User user = userService.getUserIfExistsById(huntingDto.getMemberId());
         Competition competition = competitionService.getCompetitionIfExists(huntingDto.getCompetitionId());
         LocalDateTime competitionStartDateTime = LocalDateTime.of(competition.getDate(), competition.getStartTime());
         if(LocalDateTime.now().isBefore(competitionStartDateTime))
             throw new ValidationException(new ErrorMessage("Competition has not started yet"));
-        Ranking ranking = rankingService.getMemberCompetitionRankingIfExist(competition.getId(),member.getId());
+        Ranking ranking = rankingService.getMemberCompetitionRankingIfExist(competition.getId(),user.getId());
         Fish fish = fishService.getFishIfExists(huntingDto.getFish().getName());
         if(fish.getAverageWeight() > huntingDto.getFish().getWeight())
             return Optional.empty();
-        Optional<Hunting> optionalHunting = huntingRepository.getHuntingsByCompetitionAndMemberAndFish(competition.getId(), member.getId(), fish.getId());
+        Optional<Hunting> optionalHunting = huntingRepository.getHuntsByCompetitionAndUserAndFish(competition.getId(), user.getId(), fish.getId());
         Hunting hunting = new Hunting();
         if(optionalHunting.isPresent()){
             hunting = optionalHunting.get();
             hunting.setNumberOfFish(hunting.getNumberOfFish() + 1);
         }else{
             hunting.setCompetition(competition);
-            hunting.setMember(member);
+            hunting.setUser(user);
             hunting.setFish(fish);
             hunting.setNumberOfFish(1);
         }

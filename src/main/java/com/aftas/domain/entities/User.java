@@ -1,13 +1,16 @@
 package com.aftas.domain.entities;
 
+import com.aftas.domain.enums.IdentityDocumentationType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,10 +24,20 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer num;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private LocalDate accessionDate;
+    private String nationality;
+    @Enumerated(EnumType.STRING)
+    private IdentityDocumentationType identityType;
+    @Column(unique = true)
+    private String identityNumber;
+
+    @OneToMany(mappedBy = "user")
+    private List<Ranking> competitions;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

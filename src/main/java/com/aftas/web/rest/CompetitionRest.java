@@ -1,12 +1,12 @@
 package com.aftas.web.rest;
 
+import com.aftas.domain.dto.response.user.UserResponseDto;
 import com.aftas.domain.entities.Competition;
 import com.aftas.domain.dto.request.competition.CompetitionRequestDto;
 import com.aftas.domain.dto.response.competition.CompetitionScoreResponseDto;
-import com.aftas.domain.dto.response.member.MemberResponseDto;
+import com.aftas.domain.mapper.UserMapper;
 import com.aftas.exception.custom.ValidationException;
 import com.aftas.domain.mapper.CompetitionDtoMapper;
-import com.aftas.domain.mapper.MemberDtoMapper;
 import com.aftas.service.CompetitionService;
 import com.aftas.utils.Response;
 import jakarta.validation.Valid;
@@ -22,9 +22,11 @@ import java.util.List;
 public class CompetitionRest {
 
     private final CompetitionService competitionService;
+    private final UserMapper userMapper;
 
-    public CompetitionRest(CompetitionService competitionService) {
+    public CompetitionRest(CompetitionService competitionService, UserMapper userMapper) {
         this.competitionService = competitionService;
+        this.userMapper = userMapper;
     }
 
     @GetMapping
@@ -50,25 +52,25 @@ public class CompetitionRest {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/{competitionId}/enroll/{memberNumber}")
-    public ResponseEntity<Response<CompetitionRequestDto>> enrollMember(@PathVariable("competitionId") String competitionId, @PathVariable("memberNumber") Integer memberNumber) throws ValidationException {
+    @GetMapping("/{competitionId}/enroll/{userNumber}")
+    public ResponseEntity<Response<CompetitionRequestDto>> enrollMember(@PathVariable("competitionId") String competitionId, @PathVariable("userNumber") Integer userNumber) throws ValidationException {
         Response<CompetitionRequestDto> response = new Response<>();
-        competitionService.enrollMember(Long.valueOf(competitionId), memberNumber);
+        competitionService.enrollUser(Long.valueOf(competitionId), userNumber);
         response.setMessage("Member enrolled successfully");
         return ResponseEntity.ok().body(response);
     }
 
 
-    @GetMapping("/{competitionId}/members")
-    public ResponseEntity<Response<List<MemberResponseDto>>> getMemberByCompetition(@PathVariable Long competitionId) throws ValidationException{
-        Response<List<MemberResponseDto>> response = new Response<>();
-        List<MemberResponseDto> members = new ArrayList<>();
-        competitionService.getMembersByCompetitions(competitionId)
+    @GetMapping("/{competitionId}/users")
+    public ResponseEntity<Response<List<UserResponseDto>>> getMemberByCompetition(@PathVariable Long competitionId) throws ValidationException{
+        Response<List<UserResponseDto>> response = new Response<>();
+        List<com.aftas.domain.dto.response.user.UserResponseDto> users = new ArrayList<>();
+        competitionService.getUsersByCompetitions(competitionId)
                 .stream()
-                .map(MemberDtoMapper::toDto)
-                .forEach(members::add);
+                .map(userMapper::toDto)
+                .forEach(users::add);
         response.setMessage("Members retrieved successfully");
-        response.setResult(members);
+        response.setResult(users);
         return ResponseEntity.ok().body(response);
     }
 

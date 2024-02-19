@@ -1,5 +1,6 @@
 package com.aftas.domain.dto.response.member;
 
+import com.aftas.domain.dto.response.user.UserResponseDto;
 import lombok.*;
 
 import java.util.List;
@@ -9,8 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MemberPageableDto {
-    private List<MemberResponseDto> members;
+public class UserPageableDto {
+    private List<UserResponseDto> users;
     private Integer totalPages;
     private Long totalElements;
     private Integer currentPage;

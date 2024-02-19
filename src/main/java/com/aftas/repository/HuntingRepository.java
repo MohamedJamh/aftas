@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface HuntingRepository extends JpaRepository<Hunting, Long> {
 
-    @Query("select h from Hunting h where h.competition.id = :competitionId and h.member.id = :memberId and h.fish.id = :fishId")
-    Optional<Hunting> getHuntingsByCompetitionAndMemberAndFish(Long competitionId, Long memberId, Long fishId);
+    @Query("select h from Hunting h where h.competition.id = :competitionId and h.user.id = :userId and h.fish.id = :fishId")
+    Optional<Hunting> getHuntsByCompetitionAndUserAndFish(Long competitionId, Long userId, Long fishId);
 }

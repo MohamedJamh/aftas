@@ -1,6 +1,6 @@
 package com.aftas.domain.entities;
 
-import com.aftas.domain.entities.embedded.MemberCompetition;
+import com.aftas.domain.entities.embedded.UserCompetition;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import lombok.*;
 @Table(name = "rankings")
 public class Ranking {
     @EmbeddedId
-    private MemberCompetition id;
+    private UserCompetition id;
 
     @ManyToOne
     @MapsId("competitionId")
@@ -22,8 +22,8 @@ public class Ranking {
 
     @ManyToOne
     @MapsId("memberId")
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private Integer rank;
     private Integer score;

@@ -29,5 +29,5 @@ public class Competition {
     private String location;
     private Double amount;
     @OneToMany(mappedBy = "competition")
-    private List<Ranking> members;
+    private List<Ranking> users;
 }
