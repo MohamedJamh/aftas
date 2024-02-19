@@ -1,7 +1,9 @@
 package com.aftas.service.impl;
 
+import com.aftas.domain.entities.Role;
 import com.aftas.domain.entities.User;
 import com.aftas.exception.custom.ValidationException;
+import com.aftas.repository.RoleRepository;
 import com.aftas.repository.UserRepository;
 import com.aftas.service.UserService;
 import com.aftas.utils.ErrorMessage;
@@ -17,15 +19,19 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
     public UserServiceImpl(
-            UserRepository userRepository
-    ) {
+            UserRepository userRepository,
+            RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -57,6 +63,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalMember = userRepository.findByIdentityNumber(user.getIdentityNumber());
         if(optionalMember.isPresent())
             throw new ValidationException(new ErrorMessage("User with identity number already exists"));
+        roleRepository.findByName("MEMBER").ifPresent(memberRole -> user.setRoles(Set.of(memberRole)));
         Integer maxId = userRepository.getMaxId();
         if(maxId == null) maxId = 0;
         user.setAccessionDate(LocalDate.now());

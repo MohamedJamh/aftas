@@ -1,5 +1,6 @@
 package com.aftas.web.rest;
 
+import com.aftas.domain.dto.request.user.SaveUserRequestDto;
 import com.aftas.domain.dto.request.user.UserRequestDto;
 import com.aftas.domain.dto.response.member.UserPageableDto;
 import com.aftas.domain.dto.response.user.UserResponseDto;
@@ -76,7 +77,7 @@ public class UserRest {
 
 
     @PostMapping
-    public ResponseEntity<Response<UserResponseDto>> saveUser(@RequestBody @Valid UserRequestDto userRequestDto) throws ValidationException {
+    public ResponseEntity<Response<UserResponseDto>> saveUser(@RequestBody @Valid SaveUserRequestDto userRequestDto) throws ValidationException {
         Response<UserResponseDto> response = new Response<>();
         User user = userMapper.toUser(userRequestDto);
         User saveUser = userService.createUser(user);

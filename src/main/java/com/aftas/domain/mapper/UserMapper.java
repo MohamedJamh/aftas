@@ -1,5 +1,6 @@
 package com.aftas.domain.mapper;
 
+import com.aftas.domain.dto.request.user.SaveUserRequestDto;
 import com.aftas.domain.dto.request.user.UserRequestDto;
 import com.aftas.domain.dto.response.user.UserResponseDto;
 import com.aftas.domain.entities.PermissionGroup;
@@ -20,6 +21,7 @@ public interface UserMapper {
     @Mapping(source = "permissionGroups", target = "permissionGroupPermissions", qualifiedByName = "permissionGroupsToPermissions")
     UserResponseDto toDto(User user);
     User toUser(UserRequestDto userDto);
+    User toUser(SaveUserRequestDto userDto);
 
 
     @Named("rolesToPermissions")
