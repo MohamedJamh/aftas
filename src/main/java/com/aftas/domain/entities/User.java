@@ -35,6 +35,7 @@ public class User implements UserDetails {
     private IdentityDocumentationType identityType;
     @Column(unique = true)
     private String identityNumber;
+    private Boolean isEnable;
 
     @OneToMany(mappedBy = "user")
     private List<Ranking> competitions;
@@ -116,6 +117,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isEnable;
     }
 }

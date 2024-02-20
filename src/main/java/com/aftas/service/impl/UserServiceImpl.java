@@ -7,6 +7,8 @@ import com.aftas.repository.RoleRepository;
 import com.aftas.repository.UserRepository;
 import com.aftas.service.UserService;
 import com.aftas.utils.ErrorMessage;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -26,10 +29,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    @Value("${users.default.password}")
+    private String defaultPassword;
 
     public UserServiceImpl(
             UserRepository userRepository,
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository
+    ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
@@ -60,10 +66,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) throws ValidationException {
-        Optional<User> optionalMember = userRepository.findByIdentityNumber(user.getIdentityNumber());
-        if(optionalMember.isPresent())
+        Optional<User> optionalUser = userRepository.findByIdentityNumber(user.getIdentityNumber());
+        if(optionalUser.isPresent())
             throw new ValidationException(new ErrorMessage("User with identity number already exists"));
         roleRepository.findByName("MEMBER").ifPresent(memberRole -> user.setRoles(Set.of(memberRole)));
+        user.setPassword(defaultPassword);
+        user.setEmail(user.getLastName() + "." + user.getIdentityNumber() + "@aftas.com");
         Integer maxId = userRepository.getMaxId();
         if(maxId == null) maxId = 0;
         user.setAccessionDate(LocalDate.now());

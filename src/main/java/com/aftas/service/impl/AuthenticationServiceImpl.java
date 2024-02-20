@@ -69,7 +69,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         .message("Email already exists")
                         .build()
             );
-        roleRepository.findByName("USER").ifPresent(role -> user.setRoles(Set.of(role)));
+        roleRepository.findByName("MEMBER").ifPresent(memberRole -> user.setRoles(Set.of(memberRole)));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return JwtAuthenticationResponseDto.builder()

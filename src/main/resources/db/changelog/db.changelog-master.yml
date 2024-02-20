@@ -9,3 +9,5 @@ databaseChangeLog:
       file: db/changelog/v2/08-02-2024-11-31-seeder-changelog.yaml
   - include:
       file: db/changelog/v2/19-02-2024-10-36-changelog.yaml
+  - include:
+      file: db/changelog/v2/20-02-2024-09-13-changelog.yaml

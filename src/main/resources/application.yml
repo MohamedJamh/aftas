@@ -6,6 +6,8 @@ server:
     include-binding-errors: always
 
 spring:
+  application:
+    name: aftas
   datasource:
     url: jdbc:mysql://localhost:3306/aftas?createDatabaseIfNotExist=true
     #url: jdbc:mysql://mysqldb:3306/aftas?createDatabaseIfNotExist=true # for docker with embedded mysql container
@@ -18,6 +20,7 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yml
+
 seeders:
   enabled: false
 jwt:
@@ -27,6 +30,9 @@ jwt:
     expirationInMonths: 1
   signing:
     key: p5eHhtsr9qvSTaybbxGgYkhvnT7PYcqCxi6tNUEyXvQ=
+users:
+  default:
+    password: $2a$12$DMj8nKER7YAx4Z3jVIFwZufkl64hfXdHZrYUbn20TH0VdfAC3p2CO # 1234 (bcrypt)
 
 logging:
   level:
@@ -35,3 +41,5 @@ logging:
         security: trace
         web: trace
     liquibase: trace
+
+
