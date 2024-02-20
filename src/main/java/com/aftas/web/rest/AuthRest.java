@@ -47,6 +47,7 @@ public class AuthRest {
                 .getToken()
         );
         response.setResult(jwtAuthenticationResponseDto);
+        response.setMessage("User signed-up successfully");
         return ResponseEntity.ok().body(response);
     }
 

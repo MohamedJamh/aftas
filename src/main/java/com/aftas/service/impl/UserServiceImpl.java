@@ -69,9 +69,15 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findByIdentityNumber(user.getIdentityNumber());
         if(optionalUser.isPresent())
             throw new ValidationException(new ErrorMessage("User with identity number already exists"));
+        if(user.getEmail() != null) {
+            Optional<User> optionalUserByEmail = userRepository.findByEmail(user.getEmail());
+            if(optionalUserByEmail.isPresent())
+                throw new ValidationException(new ErrorMessage("User with email already exists"));
+        }
+        else user.setEmail(user.getLastName() + "." + user.getIdentityNumber() + "@aftas.com");
+        if(user.getPassword() == null) user.setPassword(defaultPassword);
+        user.setIsEnable(Boolean.FALSE);
         roleRepository.findByName("MEMBER").ifPresent(memberRole -> user.setRoles(Set.of(memberRole)));
-        user.setPassword(defaultPassword);
-        user.setEmail(user.getLastName() + "." + user.getIdentityNumber() + "@aftas.com");
         Integer maxId = userRepository.getMaxId();
         if(maxId == null) maxId = 0;
         user.setAccessionDate(LocalDate.now());
@@ -110,5 +116,19 @@ public class UserServiceImpl implements UserService {
         } catch (NumberFormatException e) {
             return userRepository.findByFirstNameOrLastName(searchValue, searchValue, paging);
         }
+    }
+
+    @Override
+    public Page<User> getDisabledUsers(Integer pageNo,Integer pageSize) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        return userRepository.getDisabledUsers(paging);
+    }
+
+    @Override
+    public User enableUser(Integer userNumber) throws ValidationException {
+        User user = getUserIfExistsByNumber(userNumber);
+        user.setIsEnable(true);
+        return userRepository.save(user);
     }
 }

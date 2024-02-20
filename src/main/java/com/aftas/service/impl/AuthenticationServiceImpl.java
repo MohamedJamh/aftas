@@ -63,16 +63,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public JwtAuthenticationResponseDto signup(User user) throws ValidationException {
-        if(userRepository.findByEmail(user.getEmail()).isPresent())
-            throw new ValidationException(
-                ErrorMessage.builder()
-                        .message("Email already exists")
-                        .build()
-            );
-        roleRepository.findByName("MEMBER").ifPresent(memberRole -> user.setRoles(Set.of(memberRole)));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        user = userService.createUser(user);
         return JwtAuthenticationResponseDto.builder()
+                .user(userMapper.toDto(user))
                 .accessToken(jwtService.generateToken(user))
                 .build();
     }

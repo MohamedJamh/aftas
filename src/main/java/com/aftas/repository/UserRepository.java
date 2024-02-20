@@ -27,4 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findByNum(Integer memberNum, Pageable pageable);
 
     Page<User> findByFirstNameOrLastName(String firstName, String lastName, Pageable pageable);
+
+    @Query("SELECT u FROM User u where u.isEnable = false")
+    Page<User> getDisabledUsers(Pageable pageable);
 }

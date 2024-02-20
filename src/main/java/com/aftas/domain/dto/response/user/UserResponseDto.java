@@ -22,4 +22,5 @@ public class UserResponseDto {
     private String identityNumber;
     private Set<String> rolePermissions;
     private Set<String> permissionGroupPermissions;
+    private Boolean isEnable;
 }

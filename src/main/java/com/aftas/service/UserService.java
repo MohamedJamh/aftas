@@ -19,4 +19,6 @@ public interface UserService {
     User getUserIfExistsById(Long memberId) throws ValidationException;
     User getUserIfExistsByNumber(Integer memberCode) throws ValidationException;
     Page<User> findByCriteria(String searchValue,Integer pageNo, Integer pageSize);
+    Page<User> getDisabledUsers(Integer pageNo, Integer pageSize);
+    User enableUser(Integer userNumber) throws ValidationException;
 }

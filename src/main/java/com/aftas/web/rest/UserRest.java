@@ -86,6 +86,37 @@ public class UserRest {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/disabled")
+    public ResponseEntity<Response<UserPageableDto>> getDisabledUsers(
+            @RequestParam(value="pageNo", required = false, defaultValue = "0") Integer pageNo,
+            @RequestParam(value="pageSize", required = false, defaultValue = "5") Integer pageSize
+    ){
+        Response<UserPageableDto> response = new Response<>();
+        List<UserResponseDto> userResponseDtos = new ArrayList<>();
+        Page<User> userPages = userService.getDisabledUsers(pageNo,pageSize);
+        userPages.stream().map(userMapper::toDto).forEach(userResponseDtos::add);
+        response.setResult(
+                UserPageableDto.builder()
+                        .users(userResponseDtos)
+                        .totalPages(userPages.getTotalPages())
+                        .currentPage(userPages.getNumber() + 1)
+                        .totalElements(userPages.getTotalElements())
+                        .build()
+        );
+        response.setMessage("Disabled user retrieved successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/{userNumber}/enable")
+    public ResponseEntity<Response<UserResponseDto>> enableUser(@PathVariable Integer userNumber) throws ValidationException {
+        Response<UserResponseDto> response = new Response<>();
+        response.setResult(
+                userMapper.toDto(userService.enableUser(userNumber))
+        );
+        response.setMessage("User enabled successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
 
     @GetMapping("/profile")
     public ResponseEntity<Response<UserResponseDto>> getUserProfile() {
